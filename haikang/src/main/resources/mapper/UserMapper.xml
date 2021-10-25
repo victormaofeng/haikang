@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maof.haikang.mapper.UserMapper">
+    <sql id="Base_Column_List">
+        id,username,password,nickname,salt,email,phone_number
+    </sql>
+    <!-- 用户 角色 一对多 映射查询-->
+    <resultMap id="userWithRoleMap" type="User">
+        <id property="id" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <collection property="roles" ofType="Role" resultMap="roleMap"/>
+    </resultMap>
+
+    <resultMap id="roleMap" type="Role">
+        <id property="id" column="rid"/>
+        <result property="level" column="level"/>
+    </resultMap>
+
+    <select id="getWithRole" resultMap="userWithRoleMap" parameterType="int">
+         select id,username,password,salt,nickname,email,phone_number,rid,`level`
+          from v_user_role
+         where id = #{id}
+    </select>
+
+    <!-- 用户 角色 权限 一对多 映射查询-->
+    <resultMap id="userWithRolePermMap" type="User">
+        <id property="id" column="uid"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="salt" column="salt"/>
+        <result property="nickname" column="nickname"/>
+        <result property="email" column="email"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <collection property="roles" ofType="Role" resultMap="roleWithPermMap"/>
+    </resultMap>
+
+    <resultMap id="roleWithPermMap" type="Role">
+        <id property="id" column="rid"/>
+        <result property="level" column="level"/>
+        <collection property="perms" ofType="Perm" resultMap="permMap"/>
+    </resultMap>
+
+    <resultMap id="permMap" type="Perm">
+        <id property="id" column="pid"/>
+        <result property="permission" column="permission"/>
+    </resultMap>
+
+    <select id="getWithRolePerm" resultMap="userWithRolePermMap" parameterType="int">
+         select id,username,password,salt,nickname,email,phone_number,rid,`level`,
+         pid,permission from v_user_role_perm
+         where id = #{id}
+    </select>
+
+</mapper>
+

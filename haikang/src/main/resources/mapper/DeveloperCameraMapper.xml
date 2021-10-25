@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maof.haikang.mapper.DeveloperCameraMapper">
+
+    <resultMap id="developerCamera" type="DeveloperCamera">
+        <id property="id" column="id"></id>
+        <result property="developerId" column="developer_id"></result>
+        <result property="cameraId" column="camera_id"></result>
+        <association property="developer" javaType="Developer">
+            <id property="id" column="developer_id"></id>
+            <result property="appKey" column="app_key"></result>
+            <result property="secret" column="secret"></result>
+            <result property="accessToken" column="access_token"></result>
+            <result property="expireTime" column="expire_time"></result>
+        </association>
+        <association property="camera" javaType="Camera">
+            <id property="id" column="camera_id"></id>
+            <result property="localIp" column="local_ip"></result>
+            <result property="port" column="port"></result>
+            <result property="username" column="username"></result>
+            <result property="serialNumber" column="serial_number"></result>
+            <result property="type" column="type"></result>
+        </association>
+    </resultMap>
+
+    <select id="getsByCameraId" parameterType="int" resultMap="developerCamera">
+        select camera_id,local_ip,`port`,serial_number,`type`,username , developer_id , app_key,secret,access_token,expire_time,id
+        from v_developer_camera where camera_id = #{cameraId}
+    </select>
+</mapper>
+
