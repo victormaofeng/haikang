@@ -50,7 +50,7 @@ credentials = pika.PlainCredentials('guest', 'guest')
 PYTHON_DETECTION_REPLY_QUEUE = 'python_detection_reply_queue'
 
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='192.168.223.25', port=5672, virtual_host='/', credentials=credentials))
+    pika.ConnectionParameters(host='localhost', port=5672, virtual_host='/', credentials=credentials))
 
 channel = connection.channel()
 
