@@ -1,5 +1,5 @@
 import cv2 as cv
-from yolo import YOLO
+# from yolo import YOLO
 from PIL import Image
 import numpy
 import subprocess as sp
@@ -37,7 +37,8 @@ class ReIdProcessor(Processor):
 # yolo3
 class Yolo3Processor(DetectionProcessor):
     def __init__(self):
-        self.yolo = YOLO()
+        # self.yolo = YOLO()
+        self.yolo = None
 
     def process(self, frame):
         img = self.yolo.detect_image(Image.fromarray(frame))
@@ -241,6 +242,9 @@ def re_id(person_img: str, source_file: str, dest_file: str, detection_process: 
 
 
 def get_algo(algo_id):
-    return Yolo3Processor()
+    if algo_id == 1:
+        return DetectionProcessor()
+    elif algo_id == 2:
+        return ReIdProcessor()
 
 # detect2("C:\\Users\\Administrator\\Desktop\\1\\11.mp4", "C:\\Users\\Administrator\\Desktop\\1\\13.mp4", DetectionProcessor())
