@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import top.maof.haikang.mapper.DeveloperCameraMapper;
+import top.maof.haikang.mapper.UserMapper;
 import top.maof.haikang.model.DeveloperCamera;
 
 import javax.annotation.Resource;
@@ -20,6 +21,9 @@ public class HaiKangDAOTest {
     @Resource
     private DeveloperCameraMapper developerCameraMapper;
 
+    @Resource
+    private UserMapper userMapper;
+
     @Test
     public void test1() {
         DeveloperCamera developerCamera = new DeveloperCamera();
@@ -31,6 +35,11 @@ public class HaiKangDAOTest {
     @Test
     public void test2() {
         System.out.println(developerCameraMapper.getsByCameraId(1));
+    }
+
+    @Test
+    public void test3() {
+        System.out.println(userMapper.getWithRolePerm(1));
     }
 
 }

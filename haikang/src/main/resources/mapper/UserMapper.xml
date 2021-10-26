@@ -51,7 +51,7 @@
     </resultMap>
 
     <select id="getWithRolePerm" resultMap="userWithRolePermMap" parameterType="int">
-         select id,username,password,salt,nickname,email,phone_number,rid,`level`,
+         select id as uid,username,password,salt,nickname,email,phone_number,rid,`level`,
          pid,permission from v_user_role_perm
          where id = #{id}
     </select>
