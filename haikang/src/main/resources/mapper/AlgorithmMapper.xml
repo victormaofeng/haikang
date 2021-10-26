@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.maof.haikang.mapper.AlgorithmMapper">
+
+    <resultMap id="algorithmWithUser" type="top.maof.haikang.model.Algorithm">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <result property="synopsis" column="synopsis"></result>
+        <result property="userId" column="algorithm_user_id"></result>
+        <result property="insertTime" column="insert_time"></result>
+        <result property="updateTime" column="update_time"></result>
+        <association property="userVO" javaType="top.maof.haikang.vo.UserVO">
+            <id property="id" column="user_id"></id>
+            <result property="username" column="username"></result>
+            <result property="nickname" column="nickname"></result>
+            <result property="email" column="email"></result>
+            <result property="phoneNumber" column="phone_number"></result>
+        </association>
+    </resultMap>
+    
+    <select id="getAlgorithms" resultMap="algorithmWithUser">
+        select id, name, synopsis, user_id, insert_time, update_time, username, nickname, email, phone_number
+        from v_algorithm_user
+    </select>
+
+    <select id="getAlgorithmsByUserId" resultMap="algorithmWithUser">
+        select id, name, synopsis, algorithm_user_id, insert_time, update_time, user_id, username, nickname, email, phone_number
+        from v_algorithm_user
+        where user_id=#{userId}
+    </select>
+
+</mapper>
+

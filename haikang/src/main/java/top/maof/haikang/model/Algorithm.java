@@ -1,6 +1,10 @@
 package top.maof.haikang.model;
 
 import lombok.Data;
+import org.springframework.data.annotation.Transient;
+import top.maof.haikang.vo.UserVO;
+
+import java.util.Date;
 
 @Data
 public class Algorithm {
@@ -14,4 +18,12 @@ public class Algorithm {
 
     // 谁写的算法
     private int userId;
+
+    private Date insertTime;
+
+    private Date updateTime;
+
+    @Transient
+    private UserVO userVO;
+
 }
