@@ -37,7 +37,6 @@ import java.util.UUID;
 @Slf4j
 public class DetectionController {
 
-
     @Autowired
     RabbitTemplate rabbitTemplate;
 
@@ -46,7 +45,6 @@ public class DetectionController {
 
     @Autowired
     DetectFileService detectFileService;
-
 
     /**
      * int page, int pageSize, String token, int type
@@ -60,19 +58,13 @@ public class DetectionController {
         return Result.success(pageVo);
     }
 
-
-
-
-
-
-
     /**
      * 用户进行一次目标检测
      */
     @PostMapping("")
     @ResponseBody
     public Result detect(MultipartFile[] files, String title, String content,
-                         int algorithmId, String token) throws Exception {
+        int algorithmId, String token) throws Exception {
 
         // 目标检测对象
         Detection detection = new Detection();
@@ -93,7 +85,6 @@ public class DetectionController {
         }
 
         log.info("文件:" + files.length);
-
 
         for (MultipartFile file : files) {
 
@@ -135,7 +126,8 @@ public class DetectionController {
                 int detectFileId = detectFileService.insert(detectFile);
 
                 // 待处理视频或图像插入失败,下一个
-                if (detectFileId < 0) continue;
+                if (detectFileId < 0)
+                    continue;
 
                 log.info(detectFile.toString());
 
@@ -162,8 +154,9 @@ public class DetectionController {
                 log.info(detectionMessage.toString());
 
                 // 文件上传并保存成功,向python端发送目标检测消息
-                rabbitTemplate.convertAndSend(RabbitMQConfig.DETECTION_TOPIC_EXCHANGE, RabbitMQConfig.DETECTION_ROUTING_KEY,
-                        JSON.toJSON(detectionMessage));
+                rabbitTemplate.convertAndSend(RabbitMQConfig.DETECTION_TOPIC_EXCHANGE,
+                    RabbitMQConfig.DETECTION_ROUTING_KEY,
+                    JSON.toJSON(detectionMessage));
 
             } catch (Exception e) {
                 // return Result.response_500();
@@ -176,14 +169,13 @@ public class DetectionController {
         return Result.success();
     }
 
-
     /**
      * 用户进行一次重识别
      */
     @PostMapping("/reid")
     @ResponseBody
     public Result reid(MultipartFile[] files, MultipartFile img, String title, String content,
-                       int algorithmId, String token) throws Exception {
+        int algorithmId, String token) throws Exception {
 
         Integer userId = JWTUtil.getUserId(token);
 
@@ -200,13 +192,12 @@ public class DetectionController {
 
         String imgExtension = getExtension(img.getOriginalFilename());
 
-        if (!isImg(imgExtension)) return Result.response_400();
+        if (!isImg(imgExtension))
+            return Result.response_400();
 
         String imgRelativePath = getRelativePath(img.getOriginalFilename(), imgExtension);
 
-
         File saveImg = createFile(imgRelativePath);
-
 
         img.transferTo(saveImg);
 
@@ -222,9 +213,7 @@ public class DetectionController {
             return Result.response_500();
         }
 
-
         log.info("文件:" + files.length);
-
 
         for (MultipartFile file : files) {
 
@@ -241,7 +230,6 @@ public class DetectionController {
             String child = getRelativePath(originalFilename, extensionName);
 
             File newFile = createFile(child);
-
 
             // MultipartFile 提供了自动保存功能,但是无法知晓上传进度,所以改为手动保存
             // file.transferTo(newFile);
@@ -268,8 +256,8 @@ public class DetectionController {
                 int detectFileId = detectFileService.insert(detectFile);
 
                 // 待处理视频或图像插入失败,下一个
-                if (detectFileId < 0) continue;
-
+                if (detectFileId < 0)
+                    continue;
 
                 // 设置 java python 消息
                 DetectionMessage detectionMessage = new DetectionMessage();
@@ -286,7 +274,6 @@ public class DetectionController {
                 detectionMessage.setDetectPath(child);
                 detectionMessage.setDetectType(extensionName);
 
-
                 // 设置detectedFile信息(处理完成的图片或视频的地址和类型)
                 detectionMessage.setDetectedPath(getRelativePath(originalFilename, extensionName));
                 detectionMessage.setDetectedType(extensionName);
@@ -299,7 +286,7 @@ public class DetectionController {
 
                 // 文件上传并保存成功,向python端发送目标检测消息
                 rabbitTemplate.convertAndSend(RabbitMQConfig.REID_TOPIC_EXCHANGE, RabbitMQConfig.REID_ROUTING_KEY,
-                        JSON.toJSON(detectionMessage));
+                    JSON.toJSON(detectionMessage));
 
             } catch (Exception e) {
                 // return Result.response_500();
@@ -311,7 +298,6 @@ public class DetectionController {
         }
         return Result.success();
     }
-
 
     public File createFile(String relativePath) throws Exception {
 
@@ -330,7 +316,6 @@ public class DetectionController {
         return newFile;
     }
 
-
     /**
      * 获取扩展名
      * 为了方便处理比较,将文件名转为小写字母
@@ -339,12 +324,11 @@ public class DetectionController {
         return originalFilename.substring(originalFilename.lastIndexOf('.') + 1).toLowerCase();
     }
 
-
     /**
      * 判断视频或图片格式是否符合要求
      */
     private boolean isVideo(String extensionName) {
-        String[] type = new String[]{"avi", "flv", "mp4", "png", "jpg", "jpeg"};
+        String[] type = new String[] {"avi", "flv", "mp4", "png", "jpg", "jpeg"};
         for (String s : type) {
             if (s.equals(extensionName)) {
                 return true;
@@ -352,10 +336,9 @@ public class DetectionController {
         }
         return false;
     }
-
 
     private boolean isImg(String extensionName) {
-        String[] type = new String[]{"png", "jpg", "jpeg"};
+        String[] type = new String[] {"png", "jpg", "jpeg"};
         for (String s : type) {
             if (s.equals(extensionName)) {
                 return true;
@@ -363,7 +346,6 @@ public class DetectionController {
         }
         return false;
     }
-
 
     /**
      * 获取文件相对路径,
@@ -378,7 +360,7 @@ public class DetectionController {
             stringBuffer.append("/" + array[i]);
         }
         stringBuffer.append("/").append(UUID.randomUUID().toString().replace("-", ""))
-                .append(".").append(extensionName);
+            .append(".").append(extensionName);
         return stringBuffer.toString();
     }
 }

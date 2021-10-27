@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.maof.haikang.constant.URLConstantHolder;
+import top.maof.haikang.enums.AlgorithmType;
 import top.maof.haikang.model.Algorithm;
 import top.maof.haikang.result.Result;
 import top.maof.haikang.service.AlgorithmService;
@@ -36,6 +37,14 @@ public class AlgorithmRestController {
             return Result.response_400();
         }
         return Result.success(algorithmService.getAlgorithmsByUserId(userId));
+    }
+
+    @PostMapping(URLConstantHolder.ALGORITHM_REST_GET_ALGORITHMS_BY_TYPE)
+    Result<List<Algorithm>> getAlgorithmsByType(int type) {
+        if (AlgorithmType.isLegal(type) == false) {
+            return Result.response_400();
+        }
+        return Result.success(algorithmService.getAlgorithmsByType(type));
     }
 
 }

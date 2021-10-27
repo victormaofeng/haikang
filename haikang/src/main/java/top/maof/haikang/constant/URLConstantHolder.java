@@ -14,6 +14,7 @@ public class URLConstantHolder {
     public static final String ALGORITHM_REST = "algorithm-rest";
     public static final String ALGORITHM_REST_GET_ALGORITHMS = "get-algorithms";
     public static final String ALGORITHM_REST_GET_ALGORITHMS_BY_USER_ID = "get-algorithms-by-userid";
+    public static final String ALGORITHM_REST_GET_ALGORITHMS_BY_TYPE = "get-algorithms-by-type";
     // algorithm end
 
 }

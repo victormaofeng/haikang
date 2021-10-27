@@ -19,6 +19,9 @@ public class Algorithm {
     // 谁写的算法
     private int userId;
 
+    /** 算法的类型, 见{@link top.maof.haikang.enums.AlgorithmType} */
+    private int type;
+
     private Date insertTime;
 
     private Date updateTime;

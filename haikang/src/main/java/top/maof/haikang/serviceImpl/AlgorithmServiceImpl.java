@@ -29,4 +29,9 @@ public class AlgorithmServiceImpl implements AlgorithmService {
     public List<Algorithm> getAlgorithmsByUserId(int userId) {
         return algorithmMapper.getAlgorithmsByUserId(userId);
     }
+
+    @Override
+    public List<Algorithm> getAlgorithmsByType(int type) {
+        return algorithmMapper.getAlgorithmsByType(type);
+    }
 }

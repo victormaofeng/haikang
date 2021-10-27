@@ -9,4 +9,6 @@ public interface AlgorithmService {
     List<Algorithm> getAlgorithms();
 
     List<Algorithm> getAlgorithmsByUserId(int userId);
+
+    List<Algorithm> getAlgorithmsByType(int type);
 }

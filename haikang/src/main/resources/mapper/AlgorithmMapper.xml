@@ -9,6 +9,7 @@
         <result property="userId" column="algorithm_user_id"></result>
         <result property="insertTime" column="insert_time"></result>
         <result property="updateTime" column="update_time"></result>
+        <result property="type" column="type"></result>
         <association property="userVO" javaType="top.maof.haikang.vo.UserVO">
             <id property="id" column="user_id"></id>
             <result property="username" column="username"></result>
@@ -19,14 +20,20 @@
     </resultMap>
     
     <select id="getAlgorithms" resultMap="algorithmWithUser">
-        select id, name, synopsis, user_id, insert_time, update_time, username, nickname, email, phone_number
+        select id, name, synopsis, user_id, type,insert_time, update_time, username, nickname, email, phone_number
         from v_algorithm_user
     </select>
 
     <select id="getAlgorithmsByUserId" resultMap="algorithmWithUser">
-        select id, name, synopsis, algorithm_user_id, insert_time, update_time, user_id, username, nickname, email, phone_number
+        select id, name, synopsis, algorithm_user_id, type,insert_time, update_time, user_id, username, nickname, email, phone_number
         from v_algorithm_user
         where user_id=#{userId}
+    </select>
+
+    <select id="getAlgorithmsByType" resultMap="algorithmWithUser">
+        select id, name, synopsis, algorithm_user_id, type,insert_time, update_time, user_id, username, nickname, email, phone_number
+        from v_algorithm_user
+        where type=#{type}
     </select>
 
 </mapper>

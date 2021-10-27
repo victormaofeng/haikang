@@ -20,4 +20,6 @@ public interface AlgorithmMapper {
 
     List<Algorithm> getAlgorithms();
 
+    List<Algorithm> getAlgorithmsByType(@Param("type") int type);
+
 }
