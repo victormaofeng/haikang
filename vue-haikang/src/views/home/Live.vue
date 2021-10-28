@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-
+  <h1> 视频</h1>
   </div>
 </template>
 <script>

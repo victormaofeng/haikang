@@ -1,4 +1,5 @@
 import axios from 'axios'
+import store from '../store/store.js'
 
 // 创建axios实例
 const service = axios.create({
@@ -25,10 +26,27 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // 发送请求之前，要做的业务
+    if (store.state.token) {
+      //config.data.token = store.state.token
+      //config.data.set('token',store.state.token)
+      if(config.method==='post'){
+        config.data=qs.stringify({
+          token:store.state.token,
+          ...config.data
+        })
+      }else if(config.method==='get'){
+        config.params={
+          token:store.state.token,
+          ...config.params
+        }
+      }
+    }
+   
     return config
   },
   error => {
     // 错误处理代码
+    console.log(error)
     return Promise.reject(error)
   }
 )

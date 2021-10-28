@@ -59,6 +59,7 @@
   </div>
 </template>
 <script>
+
 import feed from "@/components/feed.vue";
 // 视频
 export default {
@@ -76,7 +77,7 @@ export default {
     feed,
   },
   created() {
-    this.token = window.sessionStorage.getItem("token");
+    this.token = this.$store.state.token;
     this.load();
   },
   methods: {
@@ -99,7 +100,6 @@ export default {
         this.$axios
           .get("detect/list", {
             params: {
-              token: this.token,
               pageSize: this.detectPage.pageSize,
               page: this.detectPage.page,
               type: 1,
@@ -118,7 +118,7 @@ export default {
         this.$axios
           .get("detect/list", {
             params: {
-              token: this.token,
+             // token: this.$store.state.token,
               pageSize: this.reidPage.pageSize,
               page: this.reidPage.page,
               type: 2,
@@ -137,6 +137,7 @@ export default {
     },
   },
 };
+   
 </script>
 <style scoped>
 
