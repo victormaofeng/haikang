@@ -36,6 +36,8 @@
   </div>
 </template>
 <script>
+
+
 export default {
   name: "login",
   data() {
@@ -72,7 +74,8 @@ export default {
               res = res.data;
               if (res.status == 200) {
                 // 纪录token
-                window.sessionStorage.setItem("token", res.data);
+               // window.sessionStorage.setItem("token", res.data);
+                that.$store.commit('changeToken',res.data);
                 that.$router.push("/home");
               } else {
                 that.$message.error("登录失败,用户名或密码有问题");

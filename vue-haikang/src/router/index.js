@@ -32,6 +32,13 @@ const routes = [{
         meta: {
           title: ''
         }
+      },
+      {
+        path: 'upload',
+        component: () => import('../views/home/Upload.vue'),
+        meta: {
+          title: ''
+        }
       }
     ]
   },

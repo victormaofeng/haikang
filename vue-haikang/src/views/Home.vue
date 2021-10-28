@@ -21,10 +21,31 @@
           <span slot="title">监控</span>
         </el-menu-item>
 
-        <el-menu-item index="live">
-          <i class="el-icon-menu"></i>
-          <span slot="title">案例</span>
-        </el-menu-item>
+      <el-submenu index="1">
+          <template slot="title">
+            <i class="el-icon-menu"></i>
+            <span slot="title">行人检测</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="live">检测管理</el-menu-item>
+            <el-menu-item index="1-2">模型管理</el-menu-item>
+            <el-menu-item index="1-2">结果管理</el-menu-item>
+          </el-menu-item-group>
+      </el-submenu>
+
+
+       <el-submenu index="2">
+          <template slot="title">
+            <i class="el-icon-menu"></i>
+            <span slot="title">行人重识别</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="upload">重拾别管理</el-menu-item>
+            <el-menu-item index="1-2">模型管理</el-menu-item>
+            <el-menu-item index="1-2">结果管理</el-menu-item>
+          </el-menu-item-group>
+      </el-submenu>
+
       </el-menu>
     </div>
     <!-- 内容栏 -->
@@ -129,19 +150,24 @@ export default {
     };
   },
   created() {
-    this.token = window.sessionStorage.getItem("token");
+
+
     // 请求个人信息
     this.$axios
       .get("user", {
         params: {
-          token: this.token,
+          //token: this.$store.state.token,
         },
       })
       .then((res) => {
         res = res.data;
         if (res.status == 200) {
           this.user = res.data;
-          window.sessionStorage.setItem("user", JSON.stringify(res.data));
+          console.log("============================================")
+          console.log(res.data)
+          console.log("============================================")
+          //window.sessionStorage.setItem("user", JSON.stringify(res.data));
+          this.$store.commit("setUser",res.data);
         } else {
           this.$message.error("个人信息加载失败");
         }
@@ -163,7 +189,9 @@ export default {
     handleCommand(command) {
       // 退出登录
       if (command == "logout") {
-        window.sessionStorage.removeItem("token");
+       // window.sessionStorage.removeItem("token");
+       this.$store.commit("changeToken","");
+       this.$store.commit("setUser",null);
         this.$router.push("/");
       } else if ((command = "pwd")) {
         this.pwdVisible = true;
@@ -195,7 +223,7 @@ export default {
       this.$axios
         .get("user/updatePwd", {
           params: {
-            token: this.token,
+            token: this.$store.state.token,
             password: this.pwdForm.oldPwd,
             newPassword: this.pwdForm.newPwd,
           },
@@ -219,7 +247,7 @@ export default {
         alert("您的浏览器不支持socket");
       } else {
         // 实例化socket
-        this.socket = new WebSocket(`ws://127.0.0.1/webSocket/${this.token}`);
+        this.socket = new WebSocket(`ws://127.0.0.1/webSocket/`+this.$store.state.token);
         // 监听socket连接
         this.socket.onopen = this.open;
         // 监听socket错误信息
