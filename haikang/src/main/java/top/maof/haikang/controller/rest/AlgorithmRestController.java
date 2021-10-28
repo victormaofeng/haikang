@@ -26,12 +26,12 @@ public class AlgorithmRestController {
     @Autowired
     private AlgorithmService algorithmService;
 
-    @PostMapping(URLConstantHolder.ALGORITHM_REST_GET_ALGORITHMS)
+    @RequestMapping(URLConstantHolder.ALGORITHM_REST_GET_ALGORITHMS)
     Result<List<Algorithm>> getAlgorithms() {
         return Result.success(algorithmService.getAlgorithms());
     }
 
-    @PostMapping(URLConstantHolder.ALGORITHM_REST_GET_ALGORITHMS_BY_USER_ID)
+    @RequestMapping(URLConstantHolder.ALGORITHM_REST_GET_ALGORITHMS_BY_USER_ID)
     Result<List<Algorithm>> getAlgorithmsByUserId(@RequestParam("userId") int userId) {
         if (userId <= 0) {
             return Result.response_400();
@@ -39,7 +39,7 @@ public class AlgorithmRestController {
         return Result.success(algorithmService.getAlgorithmsByUserId(userId));
     }
 
-    @PostMapping(URLConstantHolder.ALGORITHM_REST_GET_ALGORITHMS_BY_TYPE)
+    @RequestMapping(URLConstantHolder.ALGORITHM_REST_GET_ALGORITHMS_BY_TYPE)
     Result<List<Algorithm>> getAlgorithmsByType(int type) {
         if (AlgorithmType.isLegal(type) == false) {
             return Result.response_400();
