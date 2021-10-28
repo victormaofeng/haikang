@@ -4,7 +4,7 @@ import subprocess as sp
 import multiprocessing
 
 """
-废弃
+该模块废弃，暂不使用
 """
 
 
