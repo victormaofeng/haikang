@@ -14,6 +14,8 @@ from reid.data.transforms import build_transforms
 from reid.modeling import build_model
 from reid.config import cfg as reidCfg
 
+import algo
+
 
 def detect(cfg,
            data,
@@ -198,6 +200,18 @@ def process(source_frame_list, dest_frame):
         return results[0]
     else:
         return dest_frame
+
+
+class ResReIdProcessor(algo.ReIdProcessor):
+    def recognize(self, source_frame: numpy.ndarray, dest_frame: numpy.ndarray):
+        """
+         search2.process()的第一个参数类型为list[PIL.Image.Image]
+         所以需要将numpy转为PIL,但是opencv默认的图片是BGR,PIL默认为RGB,
+         所以在numpy转PIL时需要将BGR转为RGB,否则会出问题
+        """
+        frame = process([Image.fromarray(cv2.cvtColor(source_frame, cv2.COLOR_BGR2RGB)).convert('RGB')],
+                        dest_frame)
+        return frame
 
 
 if __name__ == '__main__':

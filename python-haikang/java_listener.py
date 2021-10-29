@@ -71,14 +71,14 @@ def detection_callback(ch, method, properties, byte_msg):
 
     source_file = util.concat_path(detection_message.rootPath, detection_message.detectPath)
     dest_file = util.concat_path(detection_message.rootPath, detection_message.detectedPath)
-    process = algo.get_algo(detection_message.algoId)
+    process = util.get_algo(detection_message.algoId)
     # 没有目标行人图片,则是检测任务
     if detection_message.path is None or detection_message.path == "":
-        algo.detect(source_file, dest_file, process)
+        util.detect2(source_file, dest_file, process)
     # 有目标行人图片,则是重识别任务
     else:
         person_img = util.concat_path(detection_message.rootPath, detection_message.path)
-        algo.re_id(person_img, source_file, dest_file, process)
+        util.re_id(person_img, source_file, dest_file, process)
     channel.basic_publish(exchange='', routing_key=PYTHON_DETECTION_REPLY_QUEUE, body=byte_msg.decode("utf-8"))
 
 

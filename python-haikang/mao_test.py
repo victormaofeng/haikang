@@ -1,5 +1,6 @@
 import os
+import algo
+import util
 
-# C:\\Users\\Administrator\\Desktop\\1\\, /upload
-file = os.path.join('C:\\Users\\Administrator\\Desktop\\1\\', '2/3/1.flv')
-print(file)
+util.detect2("C:\\Users\\Administrator\\Desktop\\1\\1.flv",
+             "C:\\Users\\Administrator\\Desktop\\1.flv", util.get_algo(1))
