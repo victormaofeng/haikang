@@ -3,8 +3,10 @@ import cv2
 from PIL import Image
 import numpy
 import subprocess as sp
-
+# cpu的重识别
 import search2
+# cpu的检测
+import search3
 
 """
 算法模块
@@ -45,6 +47,13 @@ class Yolo3DetectionProcessor(DetectionProcessor):
     def process(self, frame: numpy.ndarray):
         img = self.yolo.detect_image(Image.fromarray(frame))
         return numpy.array(img)
+
+
+class DarknetDetectionProcessor(DetectionProcessor):
+
+    def process(self, frame: numpy.ndarray):
+        img = search3.process(dest_frame=frame)
+        return img
 
 
 """
@@ -245,7 +254,7 @@ def re_id(person_img: str, source_file: str, dest_file: str, detection_process: 
 
 def get_algo(algo_id):
     if algo_id == 1:
-        return DetectionProcessor()
+        return DarknetDetectionProcessor()
     elif algo_id == 2:
         return ResReIdProcessor()
 
