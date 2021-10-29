@@ -1,11 +1,12 @@
 import argparse
 import time
 
+import numpy
 import torchvision.transforms as T
 
 from models import *
 from utils.datasets import *
-from utils.utils import *
+from utils.utils1 import *
 
 from reid.data import make_data_loader
 from reid.data import make_data_loader2
@@ -22,8 +23,9 @@ def detect(cfg,
            img_size=416,
            conf_thres=0.5,
            nms_thres=0.5,
-           dist_thres=1.0):
-    # Initialize
+           dist_thres=1.0,
+           half=False):
+    # Initialize 是否使用cpu
     device = torch_utils.select_device(force_cpu=True)
     # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     torch.backends.cudnn.benchmark = False  # set False for reproducible results
@@ -64,14 +66,14 @@ def detect(cfg,
     # Eval mode
     model.to(device).eval()
     # Half precision
-    opt.half = opt.half and device.type != 'cpu'  # half precision only supported on CUDA
-    if opt.half:
+    half = half and device.type != 'cpu'  # half precision only supported on CUDA
+    if half:
         model.half()
 
     # Set Dataloader
     vid_path, vid_writer = None, None
 
-    # dataloader = LoadImages(images, img_size=img_size, half=opt.half)
+    # dataloader = LoadImages(images, img_size=img_size, half=half)
 
     # Get classes and colors
     # parse_data_cfg(data)['names']:得到类别名称文件路径 names=data/coco.names
@@ -91,7 +93,7 @@ def detect(cfg,
     # Normalize RGB
     img = img[:, :, ::-1].transpose(2, 0, 1)  # BGR2RGB  HWC2CHW: (3, 416, 320)
     # ascontiguousarray函数将一个内存不连续存储的数组转换为内存连续存储的数组，使得运行速度更快。
-    img = np.ascontiguousarray(img, dtype=np.float16 if opt.half else np.float32)  # uint8 to fp16/fp32
+    img = np.ascontiguousarray(img, dtype=np.float16 if half else np.float32)  # uint8 to fp16/fp32
     img /= 255.0  # 0 - 255 to 0.0 - 1.0
 
     # cv2.imwrite(path + '.letterbox.jpg', 255 * img.transpose((1, 2, 0))[:, :, ::-1])  # save letterbox image
@@ -106,6 +108,9 @@ def detect(cfg,
     img = torch.from_numpy(img).unsqueeze(0).to(device)  # torch.Size([1, 3, 416, 320])
     pred, _ = model(img)  # 经过处理的网络预测，和原始的
     det = non_max_suppression(pred.float(), conf_thres, nms_thres)[0]  # torch.Size([5, 7])
+
+    # 保存函数返回结果
+    results = []
 
     if det is not None and len(det) > 0:
         # Rescale boxes from 416 to true image size 映射到原图
@@ -172,8 +177,25 @@ def detect(cfg,
             if distmat[index] < dist_thres:
                 print('距离：%s' % distmat[index])
                 plot_one_box(gallery_loc[index], img0, label='aim', color=colors[int(cls)])
-                cv2.imshow('person search', img0)
-                cv2.waitKey()
+                results.append(img0)
+    return results
+
+
+def process(source_frame_list, dest_frame):
+    with torch.no_grad():
+        results = detect(cfg='cfg/yolov3.cfg',
+                         data='data/coco.data',
+                         weights='weights/yolov3.weights',
+                         source_frame_list=source_frame_list,
+                         dest_frame=dest_frame,
+                         img_size=416,
+                         conf_thres=0.1,
+                         nms_thres=0.4,
+                         dist_thres=1.0)
+    if len(results) >= 1:
+        return results[0]
+    else:
+        return dest_frame
 
 
 if __name__ == '__main__':
@@ -183,9 +205,9 @@ if __name__ == '__main__':
     parser.add_argument('--weights', type=str, default='weights/yolov3.weights', help='模型权重文件路径')
     parser.add_argument('--images', type=str, default='data/samples', help='需要进行检测的图片文件夹')
     parser.add_argument('-q', '--query', default=r'query', help='查询图片的读取路径.')
-    parser.add_argument('--img-size', type=int, default=416, help='输入分辨率大小')
-    parser.add_argument('--conf-thres', type=float, default=0.1, help='物体置信度阈值')
-    parser.add_argument('--nms-thres', type=float, default=0.4, help='NMS阈值')
+    parser.add_argument('--img_size', type=int, default=416, help='输入分辨率大小')
+    parser.add_argument('--conf_thres', type=float, default=0.1, help='物体置信度阈值')
+    parser.add_argument('--nms_thres', type=float, default=0.4, help='NMS阈值')
     parser.add_argument('--dist_thres', type=float, default=1.0, help='行人图片距离阈值，小于这个距离，就认为是该行人')
     parser.add_argument('--fourcc', type=str, default='mp4v', help='fourcc output video codec (verify ffmpeg support)')
     parser.add_argument('--output', type=str, default='output', help='检测后的图片或视频保存的路径')
@@ -194,12 +216,16 @@ if __name__ == '__main__':
     # print(opt)
 
     with torch.no_grad():
-        detect(opt.cfg,
-               opt.data,
-               opt.weights,
-               source_frame_list=[Image.open("query/0001_c1s1_001051_00.jpg").convert('RGB')],
-               dest_frame=cv2.imread("data/samples/c1s1_002301.jpg"),
-               img_size=opt.img_size,
-               conf_thres=opt.conf_thres,
-               nms_thres=opt.nms_thres,
-               dist_thres=opt.dist_thres)
+        # detect(cfg=opt.cfg,
+        #        data=opt.data,
+        #        weights=opt.weights,
+        #        source_frame_list=[Image.open("query/0001_c1s1_001051_00.jpg")],
+        #        dest_frame=cv2.imread("data/samples/c1s1_002301.jpg"),
+        #        img_size=opt.img_size,
+        #        conf_thres=opt.conf_thres,
+        #        nms_thres=opt.nms_thres,
+        #        dist_thres=opt.dist_thres)
+        frame = process(source_frame_list=[Image.open("query/0001_c1s1_001051_00.jpg").convert('RGB')],
+                        dest_frame=cv2.imread("data/samples/c1s1_002301.jpg"))
+        cv2.imshow('person search', frame)
+        cv2.waitKey()

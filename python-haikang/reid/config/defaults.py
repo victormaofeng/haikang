@@ -57,7 +57,7 @@ _C.DATASETS.ROOT_DIR = ('query')
 # -----------------------------------------------------------------------------
 _C.DATALOADER = CN()
 # Number of data loading threads
-_C.DATALOADER.NUM_WORKERS = 4
+_C.DATALOADER.NUM_WORKERS = 0
 
 
 # This is global, so if we have 8 GPUs and IMS_PER_BATCH = 16, each GPU will

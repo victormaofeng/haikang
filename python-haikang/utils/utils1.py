@@ -367,7 +367,7 @@ def coco_single_class_labels(path='../coco/labels/train2014/', label_class=43):
 
 def kmeans_targets(path='../coco/trainvalno5k.txt', n=9, img_size=416):  # from utils.utils import *; kmeans_targets()
     # Produces a list of target kmeans suitable for use in *.cfg files
-    from utils.datasets import LoadImagesAndLabels
+    from utils1.datasets import LoadImagesAndLabels
     from scipy import cluster
 
     # Get label wh
