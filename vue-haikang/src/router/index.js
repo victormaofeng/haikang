@@ -34,8 +34,29 @@ const routes = [{
         }
       },
       {
-        path: 'upload',
-        component: () => import('../views/home/Upload.vue'),
+        path: 'upload1',
+        component: () => import('../views/home/Upload1.vue'),
+        meta: {
+          title: ''
+        }
+      },
+      {
+        path: 'upload2',
+        component: () => import('../views/home/Upload2.vue'),
+        meta: {
+          title: ''
+        }
+      },
+      {
+        path: 'algorithm1',
+        component: () => import('../views/home/Algorithm1.vue'),
+        meta: {
+          title: ''
+        }
+      },
+      {
+        path: 'algorithm2',
+        component: () => import('../views/home/Algorithm2.vue'),
         meta: {
           title: ''
         }

@@ -1,10 +1,14 @@
 <template>
   <div>
+    <el-breadcrumb separator-class="el-icon-arrow-right" class="size box bg">
+      <el-breadcrumb-item>首页</el-breadcrumb-item>
+      <el-breadcrumb-item>检测管理</el-breadcrumb-item>
+    </el-breadcrumb>
     <el-row class="row">
       <el-col :span="20" :offset="2">
-        <el-breadcrumb separator="/">
+        <!-- <el-breadcrumb separator="/">
           <el-breadcrumb-item>开始检测</el-breadcrumb-item>
-        </el-breadcrumb>
+        </el-breadcrumb> -->
 
         <el-form
           ref="form"
@@ -37,13 +41,14 @@
             </el-upload>
           </el-form-item>
 
-           <el-form-item label="算法选择">
-              <el-checkbox-group 
-                v-model="checkedAlgorithms"
-                :min="0"
-                :max="1">
-                <el-checkbox v-for="algorithm in algorithms" :label="algorithm" :key="algorithm">{{algorithm}}</el-checkbox>
-              </el-checkbox-group>
+
+
+           <el-form-item label="选择模型">
+            <el-select v-model="form.algorithmId" placeholder="请选择模型">
+            <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
+            </el-option>
+            </el-select>
+          
           </el-form-item>
 
           <el-form-item>
@@ -58,22 +63,25 @@
 </template>
 
 <script>
-//这里可以遍历 算法表，暂时没有接口。最后返回的是ID
-const algorithmOptions = ['yolo3', 'reid'];
+
 export default {
   name: "Upload",
+  created() {
+        this.token = this.$store.state.token;
+        this.load();
+    },
   data() {
+    
     return {
       is_auto: false,
       is_mult: true,
+      options: [{}],
       form: {
         title: "",
         content: "",
-        algorithmId: 1,
+        algorithmId: '',
         token: "",
       },
-      checkedAlgorithms: ['yolo3'],
-      algorithms: algorithmOptions,
     };
   },
   methods: {
@@ -96,11 +104,58 @@ export default {
         this.$message.error("失败");
       }
     },
+    
+     load() {
+        this.$axios
+          .get("algorithm-rest/get-algorithms-by-type", {
+                params:{
+                    type: 1,
+                },
+          })
+          .then((res) => {
+            res = res.data;
+            if (res.status == 200) {
+              console.log("===================================================");
+              console.log("data："+JSON.stringify(res.data));
+              this.options = res.data;
+
+            } else {
+              this.$message.error("数据加载失败");
+            }
+          });
+      },
+
+      
   },
 };
 </script>
 <style scope>
 .row {
   margin-top: 20px;
+}
+
+
+.size {
+  font-size: 15px;
+}
+
+.box {
+  padding: 10px 15px;
+  margin: 10px 15px;
+  border-radius: 5px 5px;
+}
+
+.pad {
+  padding: 10px 10px;
+  border-radius: 5px 5px;
+  margin: 10px 0px;
+}
+
+.shadow{
+    box-shadow: 1px 1px 2px #e9eef3;
+}
+
+.bg {
+  background-color: #e9eef3;
 }
 </style>

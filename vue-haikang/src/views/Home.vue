@@ -27,8 +27,8 @@
             <span slot="title">行人检测</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="live">检测管理</el-menu-item>
-            <el-menu-item index="1-2">模型管理</el-menu-item>
+            <el-menu-item index="upload1">检测管理</el-menu-item>
+            <el-menu-item index="algorithm1">模型管理</el-menu-item>
             <el-menu-item index="1-2">结果管理</el-menu-item>
           </el-menu-item-group>
       </el-submenu>
@@ -40,8 +40,8 @@
             <span slot="title">行人重识别</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="upload">重拾别管理</el-menu-item>
-            <el-menu-item index="1-2">模型管理</el-menu-item>
+            <el-menu-item index="upload2">重识别管理</el-menu-item>
+            <el-menu-item index="algorithm2">模型管理</el-menu-item>
             <el-menu-item index="1-2">结果管理</el-menu-item>
           </el-menu-item-group>
       </el-submenu>
