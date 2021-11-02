@@ -34,6 +34,20 @@ const routes = [{
         }
       },
       {
+        path: 'message',
+        component: () => import('../views/home/Message.vue'),
+        meta: {
+          title: ''
+        }
+      },
+      {
+        path: 'messageIndex',
+        component: () => import('../views/home/Messageindex.vue'),
+        meta: {
+          title: ''
+        }
+      },
+      {
         path: 'upload1',
         component: () => import('../views/home/Upload1.vue'),
         meta: {

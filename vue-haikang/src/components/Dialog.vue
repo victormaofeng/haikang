@@ -1,41 +1,31 @@
 <template>
-  <div>
-    <div class="main">
-      <img :src="src" class="img" v-if="src != ''" />
+    <el-dialog title="检测内容" :visible.sync="dialogFormVisible">
+        <h3>原图片：</h3><img :src="src" class="img" v-if="src != ''" />
+        <h3>生成图片：</h3><img :src="src1" class="img" v-if="src != ''" />
+        <h3>目标人物图片：</h3><img :src="src2" class="img" v-if="src != ''" />
         <div class="content">
-        <div class="title">{{ title }}</div>
+        <div class="title">检测标题：  {{ title }}</div>
         <div class="desc">
-          <div>{{ desc }}</div>
-          <div>{{ time }}</div>
+        <div>检测简介：   {{ desc }}</div>
+        <div>插入时间：   {{ time }}</div>
         </div>
-      </div>
-      <div class="close" v-if="closeale">
-        <el-button type="text" class="close" @click="close"
-          ><i class="el-icon-close"></i
-        ></el-button>
-        <!-- <el-button type="text"  icon="el-icon-edit" 
-          ></el-button> -->
-          <!-- <el-button type="text" class="edit"  @click="dialogFormVisible = true">
-            <i class="el-icon-deit"></i>
-          </el-button> -->
-          <!-- <el-button type="text" @click="dialogFormVisible = true">打开嵌套表单的 Dialog</el-button> -->
-        
-      </div>
-    </div>
-  </div>
+        </div>
+        <el-button @click="dialogFormVisible = false">关 闭</el-button>
+    </el-dialog>
 </template>
-<script>
-import image from "@/assets/logo.png" 
-// import Dialog from "@/components/Dialog.vue";
 
-// 信息流
+<script>
+
+// 信息流 这是专门给列表展示做的一个模板
 export default {
-  name: "feed",
+  name: "Dialog",
   data() {
-    return {};
+    return {
+      dialogFormVisible: false,
+    };
   },
   props: {
-    // 封面地址 生成的图片   暂时先先写上这样的备注，写完业务后再删除
+    // 封面地址 生成的图片
     src: {
       type: String,
       default: "",
@@ -77,15 +67,7 @@ export default {
   created(){
     this.src=image;
   },
-  methods: {
-    close() {
-      this.$emit("close");
-    },
-
-  },
-  components: {
-    // Dialog,
-    },
+  components: {},
 };
 </script>
 <style scoped>

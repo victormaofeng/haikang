@@ -62,7 +62,7 @@
 
           <el-col :span="2">
             <el-badge :value="messageCount" v-if="messageCount > 0">
-              <span class="item"
+              <span class="item" @click="goMessage()"
                 >消息<i class="el-icon-message el-icon--right"></i
               ></span>
             </el-badge>
@@ -73,7 +73,7 @@
               placement="bottom"
               v-if="messageCount == 0"
             >
-              <span class="item"
+              <span class="item" @click="goMessage()"
                 >消息<i class="el-icon-message el-icon--right"></i
               ></span>
             </el-tooltip>
@@ -180,6 +180,9 @@ export default {
     goDetect() {
       this.$router.push("/home/detection");
     },
+    goMessage() {
+      this.$router.push("/home/message");
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -263,6 +266,7 @@ export default {
       console.log("socket连接错误");
     },
     getMessage: function (msg) {
+      this.$store.commit("addMessage",msg);
       console.log(msg.data);
     },
     send: function (params) {

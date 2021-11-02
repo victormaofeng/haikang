@@ -5,7 +5,8 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         token: "",
-        user:null
+        user:null,
+        messages:[]
     },
        mutations:{
          changeToken(state,token){
@@ -14,6 +15,9 @@ const store = new Vuex.Store({
          },
          setUser(state,user){
             state.user = user
+         },
+         addMessage(state,msg){
+            state.messages.unshift(msg)
          }
        }
    })

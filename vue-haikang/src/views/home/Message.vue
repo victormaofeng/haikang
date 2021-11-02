@@ -12,6 +12,7 @@
         <div v-if="detectPage.list && detectPage.list.length > 0">
           <div v-for="item in detectPage.list" :key="item.id">
             <feed
+              :src ="item.path2"
               :title="item.title"
               :desc="item.content"
               :time="item.insertTime"
@@ -42,6 +43,8 @@
               :src="item.path"
               @close="close"
             ></feed>
+            <el-button type="text" icon="el-icon-edit" @click="getDetail(item)">
+            </el-button>
           </div>
 
 
@@ -59,19 +62,24 @@
   </div>
 </template>
 <script>
-
+      let a = this.$store.state.messages;
+      let detectList = [];
+      let reidList = [];
 import feed from "@/components/feed.vue";
 // 视频
 export default {
+  
   name: "Detection",
   data() {
     return {
+      
       activeName: "detect",
-      detectPage: { page: 1, pageSize: 10, list: [], count: 0 },
-      reidPage: { page: 1, pageSize: 10, list: [], count: 0 },
+      detectPage: { list: detectList, },
+      reidPage: { list: reidList, },
       token: "",
     };
   },
+  
 
   components: {
     feed,
@@ -81,60 +89,71 @@ export default {
     this.load();
   },
   methods: {
-
     close(id) {
       window.console.log(id);
     },
-    pageChange(currentPage) {
-      if (this.activeName == "detect") {
-        this.detectPage.page = currentPage;
-      } else if (this.activeName == "reid") {
-        this.reidPage.page = currentPage;
+    // pageChange(currentPage) {
+    //   if (this.activeName == "detect") {
+    //     this.detectPage.page = currentPage;
+    //   } else if (this.activeName == "reid") {
+    //     this.reidPage.page = currentPage;
+    //   }
+    //   // this.load();
+    // },
+    // tabChange(tab, event) {
+    //   //this.load();
+    // },
+    load(){
+      for (var i = 0; i < a.length; i ++) { 
+        if(a.path2 == '' || a.path2 == null){
+          detectList.unshift(a[i]);
+        }else{
+          reidList.unshift(a[i]);
+        }
       }
-      this.load();
     },
-    tabChange(tab, event) {
-      this.load();
-    },
-    load() {
-      if (this.activeName == "detect") {
-        this.$axios
-          .get("detect/list", {
-            params: {
-              pageSize: this.detectPage.pageSize,
-              page: this.detectPage.page,
-              type: 1,
-            },
-          })
-          .then((res) => {
-            res = res.data;
-            if (res.status == 200) {
-              this.detectPage.list = res.data.list;
-              this.detectPage.count = res.data.count;
-            } else {
-              this.$message.error("数据加载失败");
-            }
-          });
-      } else if (this.activeName == "reid") {
-        this.$axios
-          .get("detect/list", {
-            params: {
-             // token: this.$store.state.token,
-              pageSize: this.reidPage.pageSize,
-              page: this.reidPage.page,
-              type: 2,
-            },
-          })
-          .then((res) => {
-            res = res.data;
-            if (res.status == 200) {
-              this.reidPage.list = res.data.list;
-              this.reidPage.count = res.data.count;
-            } else {
-              this.$message.error("数据加载失败");
-            }
-          });
-      }
+    // load() {
+    //   if (this.activeName == "detect") {
+    //     this.$axios
+    //       .get("detect/list", {
+    //         params: {
+    //           pageSize: this.detectPage.pageSize,
+    //           page: this.detectPage.page,
+    //           type: 1,
+    //         },
+    //       })
+    //       .then((res) => {
+    //         res = res.data;
+    //         if (res.status == 200) {
+    //           this.detectPage.list = res.data.list;
+    //           this.detectPage.count = res.data.count;
+    //         } else {
+    //           this.$message.error("数据加载失败");
+    //         }
+    //       });
+    //   } else if (this.activeName == "reid") {
+    //     this.$axios
+    //       .get("detect/list", {
+    //         params: {
+    //          // token: this.$store.state.token,
+    //           pageSize: this.reidPage.pageSize,
+    //           page: this.reidPage.page,
+    //           type: 2,
+    //         },
+    //       })
+    //       .then((res) => {
+    //         res = res.data;
+    //         if (res.status == 200) {
+    //           this.reidPage.list = res.data.list;
+    //           this.reidPage.count = res.data.count;
+    //         } else {
+    //           this.$message.error("数据加载失败");
+    //         }
+    //       });
+    //   }
+    // },
+       getDetail(item){
+       this.$router.push({path:'/home/messageIndex',query:{message:item}});
     },
   },
 };
