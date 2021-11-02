@@ -12,22 +12,21 @@
         <div v-if="detectPage.list && detectPage.list.length > 0">
           <div v-for="item in detectPage.list" :key="item.id">
             <feed
-              :src ="item.path2"
+              :src ="item.path"
               :title="item.title"
               :desc="item.content"
               :time="item.insertTime"
               class="pad shadow"
                @close="close(item.id)"
             ></feed>
+            <el-button type="text" icon="el-icon-edit" @click="getDetail(item)">
+            </el-button>
           </div>
 
 
           <el-pagination
             background
             layout="prev, pager, next"
-            :total="detectPage.count"
-            :current-page="detectPage.page"
-            @current-change="pageChange"
           >
           </el-pagination>
         </div>
@@ -41,6 +40,7 @@
               :title="item.title"
               :desc="item.content"
               :src="item.path"
+              :time="item.insertTime"
               @close="close"
             ></feed>
             <el-button type="text" icon="el-icon-edit" @click="getDetail(item)">
@@ -51,9 +51,6 @@
           <el-pagination
             background
             layout="prev, pager, next"
-            :total="reidPage.count"
-            :current-page="reidPage.page"
-            @current-change="pageChange"
           >
           </el-pagination>
         </div>
@@ -62,7 +59,7 @@
   </div>
 </template>
 <script>
-      let a = this.$store.state.messages;
+      
       let detectList = [];
       let reidList = [];
 import feed from "@/components/feed.vue";
@@ -72,7 +69,6 @@ export default {
   name: "Detection",
   data() {
     return {
-      
       activeName: "detect",
       detectPage: { list: detectList, },
       reidPage: { list: reidList, },
@@ -100,17 +96,22 @@ export default {
     //   }
     //   // this.load();
     // },
-    // tabChange(tab, event) {
-    //   //this.load();
-    // },
+    tabChange(tab, event) {
+      this.load();
+    },
     load(){
+      let a = this.$store.state.messages;
+      detectList.length = 0;
+      reidList.length = 0;
       for (var i = 0; i < a.length; i ++) { 
-        if(a.path2 == '' || a.path2 == null){
+        if(a[i].path2 == '' || a[i].path2 == null){
           detectList.unshift(a[i]);
         }else{
           reidList.unshift(a[i]);
         }
       }
+      console.log(detectList);
+      console.log(reidList);
     },
     // load() {
     //   if (this.activeName == "detect") {

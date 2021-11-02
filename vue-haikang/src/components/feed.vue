@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import image from "@/assets/logo.png" 
+// import image from "@/assets/logo.png" 
 // import Dialog from "@/components/Dialog.vue";
 
 // 信息流
@@ -75,7 +75,7 @@ export default {
     },
   },
   created(){
-    this.src=image;
+    // this.src=image;
   },
   methods: {
     close() {

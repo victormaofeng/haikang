@@ -33,10 +33,10 @@
                 if(this.src == '' || this.src == null){
                         this.play = ! this.play
                 } 
-                if(this.src1 == '' || this.src == null){
+                if(this.src1 == '' || this.src1 == null){
                         this.play1 = ! this.play1
                 }
-                if(this.src2 == '' || this.src == null){
+                if(this.src2 == '' || this.src2 == null){
                         this.play2 = ! this.play2
                 }
                 
