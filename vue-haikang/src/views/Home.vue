@@ -138,7 +138,7 @@ export default {
       user: {},
       token: "",
       // 消息条数,当后台处理完图片或视频后,会通过websocket 通知 vue
-      messageCount: 0,
+      messageCount: this.$store.state.messageCount,
       // websocket 对象
       socket: null,
       pwdVisible: false,
@@ -266,8 +266,10 @@ export default {
       console.log("socket连接错误");
     },
     getMessage: function (msg) {
-      this.$store.commit("addMessage",msg);
+      obj=JSON.parse(msg)
+      this.$store.commit("addMessage",obj);
       console.log(msg.data);
+      this.$store.commit("addMessageCount")
     },
     send: function (params) {
       this.socket.send(params);

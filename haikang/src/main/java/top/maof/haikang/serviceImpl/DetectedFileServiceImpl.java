@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.maof.haikang.mapper.DetectedFileMapper;
 import top.maof.haikang.model.DetectedFile;
+import top.maof.haikang.mq.Message;
 import top.maof.haikang.service.DetectedFileService;
 
 import javax.annotation.Resource;
@@ -41,5 +42,9 @@ public class DetectedFileServiceImpl implements DetectedFileService {
     public List<DetectedFile> gets(int page, int pageSize) {
         if (page < 1) return null;
         return detectedFileMapper.gets((page - 1) * pageSize, pageSize);
+    }
+    @Override
+    public Message getMessage(int id){
+        return detectedFileMapper.getMessage(id);
     }
 }

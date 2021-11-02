@@ -2,6 +2,7 @@ package top.maof.haikang.mapper;
 
 import org.apache.ibatis.annotations.*;
 import top.maof.haikang.model.DetectedFile;
+import top.maof.haikang.mq.Message;
 
 import java.util.List;
 
@@ -30,4 +31,7 @@ public interface DetectedFileMapper {
 
     @Delete("delete from t_detected_file where id=#{id}")
     int delete(int id);
+    //消息传给前台的数据
+    @Select("select * from v_detection_detected where id = #{id}")
+    Message getMessage(int id);
 }

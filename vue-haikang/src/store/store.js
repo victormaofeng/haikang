@@ -6,7 +6,8 @@ const store = new Vuex.Store({
     state: {
         token: "",
         user:null,
-        messages:[]
+        messages:[],
+        messageCount: 0,
     },
        mutations:{
          changeToken(state,token){
@@ -17,7 +18,10 @@ const store = new Vuex.Store({
             state.user = user
          },
          addMessage(state,msg){
-            state.messages.unshift(msg)
+            state.messages.unshift(msg.data)
+         },
+         addMessageCount(state){
+            state.messageCount = state.messageCount+1
          }
        }
    })
