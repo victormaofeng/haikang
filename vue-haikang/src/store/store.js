@@ -14,7 +14,8 @@ const store = new Vuex.Store({
          "path1":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
          "path2":null,
          "title":"first",
-         "type":"png"
+         "type":"png",
+         "detectionId": 100,
      },
      {
       "content":"xdj26",
@@ -24,8 +25,30 @@ const store = new Vuex.Store({
       "path1":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
       "path2":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
       "title":"second",
-      "type":"png"
-  }],
+      "type":"png",
+      "detectionId": 100,
+       },{
+      "content":"xdj",
+      "id":27,
+      "insertTime":"2021-09-25 22:14:32",
+      "path":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+      "path1":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+      "path2":null,
+      "title":"third",
+      "type":"png",
+      "detectionId": 100,
+      },
+      {
+         "content":"xdj",
+         "id":28,
+         "insertTime":"2021-09-26 22:14:32",
+         "path":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+         "path1":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+         "path2":"https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png",
+         "title":"four",
+         "type":"png",
+         "detectionId": 103,
+     },],
         messageCount: 0,
     },
        mutations:{

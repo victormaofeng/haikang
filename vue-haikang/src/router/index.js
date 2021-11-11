@@ -42,7 +42,7 @@ const routes = [{
       },
       {
         path: 'messageIndex',
-        component: () => import('../views/home/Messageindex.vue'),
+        component: () => import('../views/home/MessageIndex.vue'),
         meta: {
           title: ''
         }
@@ -74,7 +74,23 @@ const routes = [{
         meta: {
           title: ''
         }
-      }
+      },
+      {
+        path: 'resultDetect',
+        component:() => import('../views/home/ResultDetect.vue')
+      },
+      {
+        path: 'resultReid',
+        component:() => import('../views/home/ResultReid.vue')
+      },
+      {
+        path: 'ResultDetectIndex',
+        component:() => import('../views/home/ResultDetectIndex.vue')
+      },
+      {
+        path: 'ResultReidIndex',
+        component:() => import('../views/home/ResultReidIndex.vue')
+      },
     ]
   },
   {

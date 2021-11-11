@@ -2,7 +2,7 @@
   <div class="main">
     <el-breadcrumb separator-class="el-icon-arrow-right" class="size box bg">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>我的历史</el-breadcrumb-item>
+      <el-breadcrumb-item>我的消息</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-tabs v-model="activeName" @tab-click="tabChange" class="box">
@@ -15,20 +15,21 @@
               :src ="item.path"
               :title="item.title"
               :desc="item.content"
-              :time="item.insertTime"
+              :time="item.insertTime1"
               class="pad shadow"
-               @close="close(item.id)"
+              @close="close(item.id)"
+              @edit="getDetail(item)"
             ></feed>
-            <el-button type="text" icon="el-icon-edit" @click="getDetail(item)">
-            </el-button>
+            <!-- <el-button type="text" icon="el-icon-edit" @click="getDetail(item)">
+            </el-button> -->
           </div>
 
 
-          <el-pagination
+          <!-- <el-pagination
             background
             layout="prev, pager, next"
           >
-          </el-pagination>
+          </el-pagination> -->
         </div>
       </el-tab-pane>
 
@@ -40,19 +41,19 @@
               :title="item.title"
               :desc="item.content"
               :src="item.path"
-              :time="item.insertTime"
+              :time="item.insertTime1"
               @close="close"
-            ></feed>
-            <el-button type="text" icon="el-icon-edit" @click="getDetail(item)">
-            </el-button>
+              @edit="getDetail(item)"
+            >
+            </feed>
           </div>
 
 
-          <el-pagination
+          <!-- <el-pagination
             background
             layout="prev, pager, next"
           >
-          </el-pagination>
+          </el-pagination> -->
         </div>
       </el-tab-pane>
     </el-tabs>
@@ -66,7 +67,7 @@ import feed from "@/components/feed.vue";
 // 视频
 export default {
   
-  name: "Detection",
+  name: "Message",
   data() {
     return {
       activeName: "detect",
@@ -184,5 +185,10 @@ export default {
 
 .bg {
   background-color: #e9eef3;
+}
+
+.close {
+  padding: 0 0;
+  margin: 0 0;
 }
 </style>

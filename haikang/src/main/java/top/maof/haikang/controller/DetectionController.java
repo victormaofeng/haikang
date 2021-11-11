@@ -18,6 +18,7 @@ import top.maof.haikang.result.Result;
 import top.maof.haikang.service.DetectFileService;
 import top.maof.haikang.service.DetectionService;
 import top.maof.haikang.utils.JWTUtil;
+import top.maof.haikang.vo.DetectDetailVo;
 import top.maof.haikang.vo.PageVO;
 
 import java.io.File;
@@ -57,6 +58,21 @@ public class DetectionController {
         PageVO<Detection> pageVo = detectionService.list(userId, type, page, pageSize);
         return Result.success(pageVo);
     }
+
+
+    /**
+     * int page, int pageSize, String token, int type
+     * type 0 所有,1 检测,2 重识别
+     */
+    @ResponseBody
+    @RequestMapping("/listDetails")
+    public Result listDetails(int page, int pageSize, String token, int type, int id) {
+        int userId = JWTUtil.getUserId(token).intValue();
+        PageVO<DetectDetailVo> pageVo = detectionService.listDetail(userId, type, page, pageSize, id);
+        return Result.success(pageVo);
+    }
+
+
 
     /**
      * 用户进行一次目标检测

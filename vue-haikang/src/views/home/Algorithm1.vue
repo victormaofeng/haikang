@@ -1,4 +1,9 @@
 <template>
+  <div class="main">
+        <el-breadcrumb separator-class="el-icon-arrow-right" class="size box bg">
+        <el-breadcrumb-item>首页</el-breadcrumb-item>
+        <el-breadcrumb-item>模型结果</el-breadcrumb-item>
+        </el-breadcrumb>
   <el-table
     :data="tableData4"
     style="width: 100%"
@@ -33,6 +38,7 @@
       </template>
     </el-table-column>
   </el-table>
+  </div>
 </template>
 
 <script>
@@ -85,3 +91,30 @@
     }
   }
 </script>
+
+<style scoped>
+
+.size {
+  font-size: 15px;
+}
+
+.box {
+  padding: 10px 15px;
+  margin: 10px 15px;
+  border-radius: 5px 5px;
+}
+
+.pad {
+  padding: 10px 10px;
+  border-radius: 5px 5px;
+  margin: 10px 0px;
+}
+
+.shadow{
+    box-shadow: 1px 1px 2px #e9eef3;
+}
+
+.bg {
+  background-color: #e9eef3;
+}
+</style>

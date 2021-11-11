@@ -2,6 +2,7 @@ package top.maof.haikang.mapper;
 
 import org.apache.ibatis.annotations.*;
 import top.maof.haikang.model.Detection;
+import top.maof.haikang.vo.DetectDetailVo;
 
 import java.util.List;
 
@@ -49,4 +50,15 @@ public interface DetectionMapper {
 
     @Delete("delete from t_detection where id=#{id}")
     int delete(int id);
+
+    @Select("select count(id) from v_detect_reslut " +
+            "where user_id = #{userId} and is_detect = #{isDetect} and id = #{id}")
+    int selectDetailCountByUserAndType(int userId, boolean isDetect,int id);
+
+
+    @Select("select * from v_detect_reslut " +
+            "where user_id = #{userId} and is_detect = #{isDetect} and id = #{id} " +
+            "limit #{start},#{len}")
+    List<DetectDetailVo> selectDetailByUserAndType(int userId, boolean isDetect, int start, int len, int id);
+
 }

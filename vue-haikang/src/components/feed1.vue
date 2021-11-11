@@ -1,35 +1,36 @@
 <template>
   <div>
     <div class="main">
-      <img :src="src" class="img" v-if="src != '' && src != null" />
+      <h3 v-show="play1">原图片</h3><img :src="src1" class="img" v-show="play1" />
+      <h3 v-show="play">生成图片</h3><img :src="src" class="img" v-show="play"  />
+      <h3 v-show="play2">目标人物</h3><img :src="src2" class="img" v-show="play2"  />
+
         <div class="content">
-        <div class="title"><el-button type="text" @click="edit()">{{ title }}</el-button></div>
+        <div class="title">{{ title }}</div>
         <div class="desc">
-          <div>{{ desc }}</div>
-          <div>{{ time }}</div>
+          <div>上传时间:{{ desc }}</div>
+          <div>生成时间:{{ time }}</div>
         </div>
       </div>
       <div class="close" v-if="closeale">
-        <el-button type="text" class="close" @click="close"
+        <!-- <el-button type="text" class="close" @click="close"
           ><i class="el-icon-close"></i
-        ></el-button>
-        <!-- <el-button type="text" class="close" @click="edit(item)"
-          ><i class="el-icon-edit"></i
-        ></el-button> -->
-
+        ></el-button>        -->
       </div>
     </div>
   </div>
 </template>
 <script>
 
-
+//这是一个专门针对检测结果，重识别结果界面做的一个组件。
 // 信息流
 export default {
-  name: "feed",
+  name: "feed1",
   data() {
     return {
-      
+      play: true,
+      play1: true,
+      play2: true,
     };
   },
   props: {
@@ -44,7 +45,7 @@ export default {
       // 默认监控流
       default: "",
     },
-    //目标任务的图片
+    //目标人物的图片
     src2: {
       type: String,
       // 默认监控流
@@ -65,6 +66,10 @@ export default {
       // 默认监控流
       default: "",
     },
+    type:{
+      type: String,
+      default:"",
+    },
     // 是否可关闭
     closeale: {
       type: Boolean,
@@ -72,16 +77,35 @@ export default {
       default: true,
     },
   },
+
   created(){
-    // this.src=image;
+    this.load();
   },
   methods: {
-    close() {
-      this.$emit("close");
-    },
-    edit() {
-      this.$emit("edit");
-    },
+    // close() {
+    //   this.$emit("close");
+    // },
+    // edit(item){
+    //   this.$emit("edit");
+    // },
+    load(){
+      window.console.log(this.type);
+      if(this.type == 'jpg' || this.type == 'png' || this.type== 'jpeg'){
+        if(this.src == '' || this.src == null ){
+                this.play = ! this.play
+        } 
+        if(this.src1 == '' || this.src1 == null){
+                this.play1 = ! this.play1
+        }
+        if(this.src2 == '' || this.src2 == null){
+                this.play2 = ! this.play2
+        }
+      }else{
+        this.play = ! this.play
+        this.play1 = ! this.play1
+        this.play2 = ! this.play2
+      }        
+    }
 
   },
   components: {

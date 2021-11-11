@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import top.maof.haikang.mapper.DetectionMapper;
 import top.maof.haikang.model.Detection;
 import top.maof.haikang.service.DetectionService;
+import top.maof.haikang.vo.DetectDetailVo;
 import top.maof.haikang.vo.PageVO;
 
 import java.util.List;
@@ -101,5 +102,31 @@ public class DetectionServiceImpl implements DetectionService {
         pageVO.setCount(length);
         pageVO.setList(detections);
         return pageVO;
+    }
+
+    /**
+     * type  1 检测, 2 重识别
+     */
+    @Override
+    public PageVO<DetectDetailVo> listDetail(int userId,int type,int page,int pageSize,int id){
+        PageVO<DetectDetailVo> pageVO = new PageVO<>();
+        int length = 0;
+        List<DetectDetailVo> detectDetailVoList = null;
+        switch (type){
+            //检测记录
+            case 1:
+                detectDetailVoList = detectionMapper.selectDetailByUserAndType(userId,true,(page - 1)*pageSize,pageSize,id);
+                length = detectionMapper.selectDetailCountByUserAndType(userId,true,id);
+                break;
+
+            //重拾别
+            case 2:
+                detectDetailVoList = detectionMapper.selectDetailByUserAndType(userId,false,(page-1)*pageSize,pageSize,id);
+                length = detectionMapper.selectDetailCountByUserAndType(userId,false,id);
+                break;
+        }
+        pageVO.setCount(length);
+        pageVO.setList(detectDetailVoList);
+        return pageVO ;
     }
 }

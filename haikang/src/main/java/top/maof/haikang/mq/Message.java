@@ -11,6 +11,9 @@ public class Message {
     //已检测的ID
     private int id;
 
+    //一大次检测的ID
+    private int eid;
+
     // 已检测的文件路径
     private String path;
 
@@ -18,6 +21,9 @@ public class Message {
     private String type;
 
     //完成检测的插入时间
+    private Date insertTime1;
+
+    //上传的时间
     private Date insertTime;
 
     // 原文件路径
