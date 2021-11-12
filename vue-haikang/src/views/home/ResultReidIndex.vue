@@ -5,7 +5,7 @@
         <el-breadcrumb-item>重识别结果</el-breadcrumb-item>
         </el-breadcrumb>
 
-        <div v-if="reidPage.list && reidPage.list.length > 0">
+        <div v-if="reidPage.list && reidPage.list.length > 0" class="box">
           <div v-for="item in reidPage.list" v-bind:key="item.id">
             <feed
               :title="item.title"

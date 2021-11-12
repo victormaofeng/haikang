@@ -21,10 +21,10 @@ public class Message {
     private String type;
 
     //完成检测的插入时间
-    private Date insertTime1;
+    private Date insertTime;
 
     //上传的时间
-    private Date insertTime;
+    private Date insertTime1;
 
     // 原文件路径
     private String path1;

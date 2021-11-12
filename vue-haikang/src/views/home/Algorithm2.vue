@@ -6,8 +6,9 @@
     </el-breadcrumb>
     <el-table
       :data="tableData4"
-      style="width: 100%"
-      max-height="250">
+      style="width: 90%"
+      max-height="250"
+      class="box">
       <el-table-column
         fixed
         prop="id"

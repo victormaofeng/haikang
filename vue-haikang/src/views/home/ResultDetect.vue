@@ -5,7 +5,7 @@
         <el-breadcrumb-item>检测结果</el-breadcrumb-item>
         </el-breadcrumb>
 
-        <div v-if="detectPage.list && detectPage.list.length > 0">
+        <div v-if="detectPage.list && detectPage.list.length > 0" class="box">
           <div v-for="item in detectPage.list" :key="item.id">
             <feed
               :title="item.title"
