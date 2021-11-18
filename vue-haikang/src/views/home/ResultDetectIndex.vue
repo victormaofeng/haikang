@@ -19,14 +19,14 @@
           </div>
 
 
-          <el-pagination
+          <!-- <el-pagination
             background
             layout="prev, pager, next"
             :total="detectPage.count"
             :current-page="detectPage.page"
             @current-change="pageChange"
           >
-          </el-pagination>
+          </el-pagination> -->
         </div>
 
     </div>
@@ -39,7 +39,7 @@
 export default {
     data(){
         return{
-            detectPage: { page: 1, pageSize: 10, list: [], count: 0 },
+            detectPage: { page: 1, pageSize: 100, list: [], count: 0 },
             token: "",
         }
     },

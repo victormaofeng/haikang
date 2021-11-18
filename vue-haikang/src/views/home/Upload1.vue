@@ -90,7 +90,8 @@ export default {
     },
     detect: function () {
       window.console.log(this.form);
-      this.form.token = window.sessionStorage.getItem("token");
+      // this.form.token = window.sessionStorage.getItem("token");
+      this.form.token = this.$store.state.token;
       this.$refs["upload"].submit();
     },
     success: function (res, file, fileList) {

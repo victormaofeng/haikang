@@ -1,9 +1,30 @@
 <template>
   <div>
     <div class="main">
+      <div class="main1">
+      <h3 v-show="play3">原视频</h3>
+      <d-player
+        src="http://60.30.52.41:80/live/zxldd.stream/playlist.m3u8"
+        :live="true"
+        :autoplay="true"
+        type="hls"
+        class="img"
+        v-show="play3"
+      />
+      <h3 v-show="play4">生成视频</h3>
+      <d-player
+        src="http://60.30.52.41:80/live/zxldd.stream/playlist.m3u8"
+        :live="true"
+        :autoplay="true"
+        type="hls"
+        class="img"
+        v-show="play4"
+      />
       <h3 v-show="play1">原图片</h3><img :src="src1" class="img" v-show="play1" />
       <h3 v-show="play">生成图片</h3><img :src="src" class="img" v-show="play"  />
-      <h3 v-show="play2">目标人物</h3><img :src="src2" class="img" v-show="play2"  />
+      <h3 v-show="play2">目标人物</h3><img :src="src2" class="img" v-show="play2" />
+      </div>
+      
 
         <div class="content">
         <div class="title">{{ title }}</div>
@@ -22,6 +43,10 @@
 </template>
 <script>
 
+import EZUIKit from "@/components/EZUIKitJs";
+import player from "@/components/player.vue";
+import dPlayer from "@/components/dplayer.vue";
+
 //这是一个专门针对检测结果，重识别结果界面做的一个组件。
 // 信息流
 export default {
@@ -31,6 +56,8 @@ export default {
       play: true,
       play1: true,
       play2: true,
+      play3: true,
+      play4: true,
     };
   },
   props: {
@@ -90,38 +117,56 @@ export default {
     // },
     load(){
       window.console.log(this.type);
+      //如果格式为图片，则采取img显示；如果格式不是图片，则采取dplayer显示。
       if(this.type == 'jpg' || this.type == 'png' || this.type== 'jpeg'){
+         this.play4 = ! this.play4
+         this.play3 = ! this.play3
         if(this.src == '' || this.src == null ){
                 this.play = ! this.play
         } 
-        if(this.src1 == '' || this.src1 == null){
+        if(this.src1 == '' || this.src1 == null){  
                 this.play1 = ! this.play1
         }
-        if(this.src2 == '' || this.src2 == null){
-                this.play2 = ! this.play2
-        }
       }else{
-        this.play = ! this.play
         this.play1 = ! this.play1
-        this.play2 = ! this.play2
-      }        
+        this.play = ! this.play
+        if(this.src == '' || this.src == null ){
+                this.play4 = ! this.play4
+        } 
+        if(this.src1 == '' || this.src1 == null){  
+                this.play3 = ! this.play3
+        }
+      }
+      // 如果不是重识别，则不显示目标图像
+      if(this.src2 == '' || this.src2 == null){
+                this.play2 = ! this.play2
+        }        
     }
 
   },
   components: {
-    // Dialog,
+    EZUIKit,
+    player,
+    dPlayer,
     },
 };
 </script>
 <style scoped>
 .main {
   display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.main1 {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 .img {
-  height: 75px;
-  width: 100px;
+  /* height: 75px;
+  width: 100px; */
+  width: 200px;
+  height: 150px;
 }
 .content {
   height: 75px;

@@ -4,11 +4,12 @@
     <el-breadcrumb-item>首页</el-breadcrumb-item>
     <el-breadcrumb-item>模型结果</el-breadcrumb-item>
     </el-breadcrumb>
+    <div class="box">
     <el-table
       :data="tableData4"
-      style="width: 90%"
+      style="width: 100%"
       max-height="250"
-      class="box">
+      >
       <el-table-column
         fixed
         prop="id"
@@ -39,6 +40,7 @@
         </template>
       </el-table-column>
     </el-table>
+    </div>
   </div>
 </template>
 
