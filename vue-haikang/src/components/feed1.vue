@@ -4,19 +4,19 @@
       <div class="main1">
       <h3 v-show="play3">原视频</h3>
       <d-player
-        src="http://60.30.52.41:80/live/zxldd.stream/playlist.m3u8"
+        :src="src1"
         :live="true"
         :autoplay="true"
-        type="hls"
+        :type="type"
         class="img"
         v-show="play3"
       />
       <h3 v-show="play4">生成视频</h3>
       <d-player
-        src="http://60.30.52.41:80/live/zxldd.stream/playlist.m3u8"
+        :src="src"
         :live="true"
         :autoplay="true"
-        type="hls"
+        :type="type"
         class="img"
         v-show="play4"
       />
