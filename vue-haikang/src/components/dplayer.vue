@@ -36,7 +36,7 @@ export default {
     src: {
       type: String,
       // 默认监控流
-      default: "http://60.30.52.41:80/live/zxldd.stream/playlist.m3u8",
+      default: "",
     },
     // 视频类型
     type: { type: String, default: "hls" },
@@ -53,6 +53,7 @@ export default {
     };
   },
   mounted() {
+    console.log(this.src);
     this.dp = new DPlayer({
       container: this.$refs.dplayer,
       autoplay: this.autoplay,

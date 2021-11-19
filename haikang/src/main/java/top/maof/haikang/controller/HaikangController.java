@@ -52,4 +52,24 @@ public class HaikangController {
         }
         return Result.success(developerCamera);
     }
+
+    @ApiOperation("根据摄像头ID动态获取地址,参数为：摄像头ID；协议；视频清晰度")
+    @RequestMapping(value = "/{cameraId}/{protocol}/{quality}", method = RequestMethod.GET)
+    public Result<HaikangApi.Live> getUrl(@PathVariable("cameraId") @ApiParam("摄像头id") int cameraId,@PathVariable("protocol") int protocol,@PathVariable("quality") int quality) {
+        DeveloperCamera developerCamera = developerCameraService.getByCameraId(cameraId);
+        // 没有对应id的摄像头,返回请求参数错误
+        if (developerCamera == null) return Result.response_400();
+        Developer developer = developerCamera.getDeveloper();
+        //access_token 没有或失效,重新请求萤石获取并保存
+        if (developer.getAccessToken() == null || developer.getExpireTime() < System.currentTimeMillis()) {
+            developer = haikangApi.getAccessToken(developer.getAppKey(), developer.getSecret());
+            developer.setId(developerCamera.getDeveloperId());
+            developerService.update(developer);
+        }
+        HaikangApi.Live live = haikangApi.getLive(developer.getAccessToken(), developerCamera.getCamera().getSerialNumber(), protocol, quality);
+        //如果live为空，那么是getLive出错了；并不是此接口状态出错。
+        return Result.success(live);
+    }
+
+
 }

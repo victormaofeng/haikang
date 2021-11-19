@@ -14,16 +14,17 @@
         class="item"
       />
 
-      <d-player
-        src="https://open.ys7.com/v3/openlive/F02718370_1_1.m3u8?expire=1664766417&id=366541977629523968&t=ad2f4f09cdf97eacfb27302049a1e6f62f3ba8c38016f3cc94b965ab686ab30e&ev=100"
+
+      <d-player v-if="src!=''"
+        :src="src"
         type="hls"
         :live="true"
         class="item"
       />
 
       <d-player
-        src="https://rtmp01open.ys7.com:9188/v3/openlive/F02718370_1_1.flv?expire=1664766619&id=366542826972753920&t=ed9ce2a12708e2e74c3bbc3f8d0b7f55ea4d491cf73fc8580838409350eb8d6c&ev=100"
-        type="flv"
+        :src="src" v-if="src!=''"
+        type="hls"
         :live="true"
         class="item"
       />
@@ -40,6 +41,7 @@ export default {
   data() {
     return {
       list: [],
+      src: "",
     };
   },
   components: {
@@ -47,7 +49,9 @@ export default {
     player,
     dPlayer,
   },
-  onShow() {},
+  created(){
+    this.getUrl();
+  },
   methods: {
     getDetectedFile: function () {
       this.$axios("detectedFile/gets", {
@@ -61,6 +65,21 @@ export default {
         if (res.status == 200) {
           this.list = res.data;
         } else {
+          this.$message.error("请求错误");
+        }
+      });
+    },
+    getUrl(){
+      this.$axios("haikang/1/2/2",{
+
+      }).then((res) =>{
+        res = res.data;
+        if(res.status == 200){
+           console.log("+++++++++++++++++++++++++++++=");
+          // console.log(res);
+          this.src = res.data.url;
+           console.log(this.src);
+        }else{
           this.$message.error("请求错误");
         }
       });
