@@ -26,9 +26,14 @@ public class PythonListener {
     public void msg(String msg) {
         log.info(msg);
         DetectionMessage detectionMessage = JSON.parseObject(msg, DetectionMessage.class);
+
         DetectedFile detectedFile = detectionMessage.detectedFile();
+
         detectedFileService.insert(detectedFile);
         Message message = detectedFileService.getMessage(detectedFile.getId());
+
+        message.setStyle(detectionMessage.isDetect());
+
         WebSocketController.send(detectionMessage.getToken(),JSON.toJSONString(message));
     }
 }

@@ -18,6 +18,7 @@ public class DeveloperCamera {
     private Integer cameraId;
     @Transient
     private Developer developer;
+
     @Transient
     private Camera camera;
 }

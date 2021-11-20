@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 <div>
   <el-breadcrumb separator-class="el-icon-arrow-right" class="size box bg">
       <el-breadcrumb-item>首页</el-breadcrumb-item>

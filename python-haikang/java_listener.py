@@ -42,7 +42,7 @@ java端和python目标检测的通信类
 # 目标检测队列
 JAVA_DETECTION_QUEUE = "detection_queue"
 
-# 行人重识别队列
+# 行人重识别队列,已弃用
 JAVA_REID_QUEUE = "reid_queue"
 
 credentials = pika.PlainCredentials('guest', 'guest')
@@ -50,11 +50,11 @@ credentials = pika.PlainCredentials('guest', 'guest')
 PYTHON_DETECTION_REPLY_QUEUE = 'python_detection_reply_queue'
 
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters(host='localhost', port=5672, virtual_host='/', credentials=credentials))
+    pika.ConnectionParameters(host='192.168.223.25', port=5672, virtual_host='/', credentials=credentials))
 
 channel = connection.channel()
 
-channel.queue_declare(queue=PYTHON_DETECTION_REPLY_QUEUE, durable=True)
+channel.queue_declare(queue=JAVA_REID_QUEUE, durable=True)
 
 # 目标检测队列声明
 channel.queue_declare(queue=JAVA_DETECTION_QUEUE, durable=True)
@@ -66,19 +66,23 @@ channel.queue_declare(queue=PYTHON_DETECTION_REPLY_QUEUE, durable=True)
 def detection_callback(ch, method, properties, byte_msg):
     ch.basic_ack(delivery_tag=method.delivery_tag)
     # 处理java信息,转成字典处理
-    print(byte_msg.decode("utf-8"))
+    print(byte_msg)
     detection_message = json.loads(byte_msg.decode("utf-8"))
 
-    source_file = util.concat_path(detection_message.rootPath, detection_message.detectPath)
-    dest_file = util.concat_path(detection_message.rootPath, detection_message.detectedPath)
-    process = util.get_algo(detection_message.algoId)
-    # 没有目标行人图片,则是检测任务
-    if detection_message.path is None or detection_message.path == "":
-        util.detect2(source_file, dest_file, process)
+    print(type(detection_message))
+    print(detection_message)
+
+    source_file = util.concat_path(detection_message['rootPath'], detection_message['detectPath'])
+    dest_file = util.concat_path(detection_message['rootPath'], detection_message['detectedPath'])
+    process = util.get_algo(detection_message['algoId'])
     # 有目标行人图片,则是重识别任务
-    else:
-        person_img = util.concat_path(detection_message.rootPath, detection_message.path)
+    if detection_message['detect'] is False:
+        person_img = util.concat_path(detection_message['rootPath'], detection_message['path'])
         util.re_id(person_img, source_file, dest_file, process)
+    # 没有目标行人图片,则是检测任务
+    else:
+        util.detect2(source_file, dest_file, process)
+
     channel.basic_publish(exchange='', routing_key=PYTHON_DETECTION_REPLY_QUEUE, body=byte_msg.decode("utf-8"))
 
 

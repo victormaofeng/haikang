@@ -215,32 +215,7 @@ class ResReIdProcessor(algo.ReIdProcessor):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--cfg', type=str, default='cfg/yolov3.cfg', help="模型配置文件路径")
-    parser.add_argument('--data', type=str, default='data/coco.data', help="数据集配置文件所在路径")
-    parser.add_argument('--weights', type=str, default='weights/yolov3.weights', help='模型权重文件路径')
-    parser.add_argument('--images', type=str, default='data/samples', help='需要进行检测的图片文件夹')
-    parser.add_argument('-q', '--query', default=r'query', help='查询图片的读取路径.')
-    parser.add_argument('--img_size', type=int, default=416, help='输入分辨率大小')
-    parser.add_argument('--conf_thres', type=float, default=0.1, help='物体置信度阈值')
-    parser.add_argument('--nms_thres', type=float, default=0.4, help='NMS阈值')
-    parser.add_argument('--dist_thres', type=float, default=1.0, help='行人图片距离阈值，小于这个距离，就认为是该行人')
-    parser.add_argument('--fourcc', type=str, default='mp4v', help='fourcc output video codec (verify ffmpeg support)')
-    parser.add_argument('--output', type=str, default='output', help='检测后的图片或视频保存的路径')
-    parser.add_argument('--half', default=False, help='是否采用半精度FP16进行推理')
-    opt = parser.parse_args()
-    # print(opt)
-
     with torch.no_grad():
-        # detect(cfg=opt.cfg,
-        #        data=opt.data,
-        #        weights=opt.weights,
-        #        source_frame_list=[Image.open("query/0001_c1s1_001051_00.jpg")],
-        #        dest_frame=cv2.imread("data/samples/c1s1_002301.jpg"),
-        #        img_size=opt.img_size,
-        #        conf_thres=opt.conf_thres,
-        #        nms_thres=opt.nms_thres,
-        #        dist_thres=opt.dist_thres)
         frame = process(source_frame_list=[Image.open("query/0001_c1s1_001051_00.jpg").convert('RGB')],
                         dest_frame=cv2.imread("data/samples/c1s1_002301.jpg"))
         cv2.imshow('person search', frame)

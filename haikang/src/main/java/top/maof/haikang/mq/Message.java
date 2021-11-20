@@ -1,5 +1,6 @@
 package top.maof.haikang.mq;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 import top.maof.haikang.model.Algorithm;
 
@@ -37,4 +38,7 @@ public class Message {
 
     // 重识别时上传的目标人物图片地址,目标检测时该列为空
     private String path2;
+
+    // true 监测； false 重识别
+    private boolean style;
 }

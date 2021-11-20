@@ -21,7 +21,7 @@
           <span slot="title">监控</span>
         </el-menu-item>
 
-      <el-submenu index="1">
+        <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span slot="title">行人检测</span>
@@ -31,10 +31,9 @@
             <el-menu-item index="algorithm1">模型管理</el-menu-item>
             <el-menu-item index="resultDetect">结果管理</el-menu-item>
           </el-menu-item-group>
-      </el-submenu>
+        </el-submenu>
 
-
-       <el-submenu index="2">
+        <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span slot="title">行人重识别</span>
@@ -44,8 +43,7 @@
             <el-menu-item index="algorithm2">模型管理</el-menu-item>
             <el-menu-item index="resultReid">结果管理</el-menu-item>
           </el-menu-item-group>
-      </el-submenu>
-
+        </el-submenu>
       </el-menu>
     </div>
     <!-- 内容栏 -->
@@ -117,7 +115,6 @@
                 <el-button type="primary" @click="submitPwd()">确 定</el-button>
               </div>
             </el-dialog>
-            
           </el-col>
         </el-row>
       </div>
@@ -138,7 +135,7 @@ export default {
       user: {},
       token: "",
       // 消息条数,当后台处理完图片或视频后,会通过websocket 通知 vue
-      messageCount: this.$store.state.messageCount,
+      messageCount: 0,
       // websocket 对象
       socket: null,
       pwdVisible: false,
@@ -150,8 +147,6 @@ export default {
     };
   },
   created() {
-
-
     // 请求个人信息
     this.$axios
       .get("user", {
@@ -163,17 +158,19 @@ export default {
         res = res.data;
         if (res.status == 200) {
           this.user = res.data;
-          console.log("============================================")
-          console.log(res.data)
-          console.log("============================================")
+          console.log("============================================");
+          console.log(res.data);
+          console.log("============================================");
           //window.sessionStorage.setItem("user", JSON.stringify(res.data));
-          this.$store.commit("setUser",res.data);
+          this.$store.commit("setUser", res.data);
         } else {
           this.$message.error("个人信息加载失败");
         }
       });
 
     this.initSocket();
+
+    this.messageCount = this.$store.state.messageCount;
   },
 
   methods: {
@@ -192,9 +189,9 @@ export default {
     handleCommand(command) {
       // 退出登录
       if (command == "logout") {
-       // window.sessionStorage.removeItem("token");
-       this.$store.commit("changeToken","");
-       this.$store.commit("setUser",null);
+        // window.sessionStorage.removeItem("token");
+        this.$store.commit("changeToken", "");
+        this.$store.commit("setUser", null);
         this.$router.push("/");
       } else if ((command = "pwd")) {
         this.pwdVisible = true;
@@ -250,7 +247,9 @@ export default {
         alert("您的浏览器不支持socket");
       } else {
         // 实例化socket
-        this.socket = new WebSocket(`ws://127.0.0.1/webSocket/`+this.$store.state.token);
+        this.socket = new WebSocket(
+          `ws://127.0.0.1/webSocket/` + this.$store.state.token
+        );
         // 监听socket连接
         this.socket.onopen = this.open;
         // 监听socket错误信息
@@ -266,10 +265,12 @@ export default {
       console.log("socket连接错误");
     },
     getMessage: function (msg) {
-      obj=JSON.parse(msg)
-      this.$store.commit("addMessage",obj);
-      console.log(msg.data);
-      this.$store.commit("addMessageCount")
+      console.log("websocket:", msg.data);
+      this.messageCount = this.messageCount + 1;
+      let obj = JSON.parse(msg.data);
+      this.$store.commit("addMessage", obj);
+
+      this.$store.commit("addMessageCount");
     },
     send: function (params) {
       this.socket.send(params);

@@ -21,9 +21,18 @@ public class DetectionMessage {
 
     private int detectId;
 
+
+    private boolean isDetect;
+
+
+
+
     // 重识别时需要识别的对象的图片
     private String path;
     private String type;
+
+
+
 
 
     // 待检测的文件位置(相对地址)

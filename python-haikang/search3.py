@@ -117,7 +117,7 @@ class DarknetDetectionProcessor(DetectionProcessor):
                  img_size=416,
                  half=False,
                  conf_thres=0.1,
-                 nms_thres=0.4):
+                 nms_thres=0.6):
 
         self.img_size = img_size
         self.cfg = cfg
@@ -225,11 +225,12 @@ if __name__ == '__main__':
     # opt = parser.parse_args()
 
     # with torch.no_grad():
-        # frame = process(
-        #     dest_frame=cv2.imread("data/samples/c1s1_002301.jpg"))
-        # cv2.imshow('person search', frame)
-        # cv2.waitKey()
+    # frame = process(
+    #     dest_frame=cv2.imread("data/samples/c1s1_002301.jpg"))
+    # cv2.imshow('person search', frame)
+    # cv2.waitKey()
     model = DarknetDetectionProcessor()
-    img = model.process(cv2.imread("data/samples/c1s1_002301.jpg"))
-    cv2.imshow('person search', img)
-    cv2.waitKey()
+    img = model.process(cv2.imread("C:\\Users\\Administrator\\Desktop\\2.png"))
+    # cv2.imshow('person search', img)
+    # cv2.waitKey()
+    cv2.imwrite("C:\\Users\\Administrator\\Desktop\\22.png", img)

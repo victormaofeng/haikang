@@ -165,6 +165,8 @@ public class DetectionController {
                 // 设置绝对路径
                 detectionMessage.setRootPath(WebMvcConfig.uploadRootPath());
 
+                detectionMessage.setDetect(true);
+
                 detectionMessage.setToken(token);
 
                 log.info(detectionMessage.toString());
@@ -172,7 +174,7 @@ public class DetectionController {
                 // 文件上传并保存成功,向python端发送目标检测消息
                 rabbitTemplate.convertAndSend(RabbitMQConfig.DETECTION_TOPIC_EXCHANGE,
                     RabbitMQConfig.DETECTION_ROUTING_KEY,
-                    JSON.toJSON(detectionMessage));
+                    JSON.toJSON(detectionMessage).toString());
 
             } catch (Exception e) {
                 // return Result.response_500();
@@ -282,6 +284,9 @@ public class DetectionController {
                 detectionMessage.setPath(imgRelativePath);
                 detectionMessage.setType(imgExtension);
 
+
+                detectionMessage.setDetect(false);
+
                 // 设置算法
                 detectionMessage.setAlgoId(algorithmId);
 
@@ -301,8 +306,9 @@ public class DetectionController {
                 detectionMessage.setToken(token);
 
                 // 文件上传并保存成功,向python端发送目标检测消息
-                rabbitTemplate.convertAndSend(RabbitMQConfig.REID_TOPIC_EXCHANGE, RabbitMQConfig.REID_ROUTING_KEY,
-                    JSON.toJSON(detectionMessage));
+                rabbitTemplate.convertAndSend(RabbitMQConfig.DETECTION_TOPIC_EXCHANGE,
+                        RabbitMQConfig.DETECTION_ROUTING_KEY,
+                    JSON.toJSON(detectionMessage).toString());
 
             } catch (Exception e) {
                 // return Result.response_500();

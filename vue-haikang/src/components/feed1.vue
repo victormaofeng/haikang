@@ -2,7 +2,7 @@
   <div>
     <div class="main">
       <div class="main1">
-      <h3 v-show="play3">原视频</h3>
+      
       <d-player
         :src="src1"
         :live="true"
@@ -11,7 +11,8 @@
         class="img"
         v-show="play3"
       />
-      <h3 v-show="play4">生成视频</h3>
+	  <h3 v-show="play3">原视频</h3>
+      
       <d-player
         :src="src"
         :live="true"
@@ -20,18 +21,25 @@
         class="img"
         v-show="play4"
       />
-      <h3 v-show="play1">原图片</h3><img :src="src1" class="img" v-show="play1" />
-      <h3 v-show="play">生成图片</h3><img :src="src" class="img" v-show="play"  />
-      <h3 v-show="play2">目标人物</h3><img :src="src2" class="img" v-show="play2" />
+	  <h3 v-show="play4">生成视频</h3>
+	  
+	  
+      <img :src="src1" class="img" v-show="play1" />
+      <img :src="src" class="img" v-show="play"  />
+     <img :src="src2" class="img" v-show="play2" /> <h3 v-show="play2">目标人物</h3>
+	 
       </div>
-      
-
+      <div class="wenzi">
+          <h3 class="pword" v-show="play1">原图片</h3>
+          <h3 class="pword" v-show="play">生成图片</h3>
+      </div>
         <div class="content">
         <div class="title">{{ title }}</div>
         <div class="desc">
           <div>上传时间:{{ desc }}</div>
           <div>生成时间:{{ time }}</div>
         </div>
+		
       </div>
       <div class="close" v-if="closeale">
         <!-- <el-button type="text" class="close" @click="close"
@@ -107,6 +115,10 @@ export default {
 
   created(){
     this.load();
+	
+	this.src="http://127.0.0.1"+this.src
+	this.src1="http://127.0.0.1"+this.src1
+	this.src2="http://127.0.0.1"+this.src2
   },
   methods: {
     // close() {
@@ -162,11 +174,20 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
+.wenzi{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.pword{
+  /* display: flex;
+  align-items: center;
+  align-self: auto; */
+}
 .img {
   /* height: 75px;
-  width: 100px; */
-  width: 200px;
-  height: 150px;
+  width: 400px; */
+  height: 300px;
 }
 .content {
   height: 75px;

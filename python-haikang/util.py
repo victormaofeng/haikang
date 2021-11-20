@@ -1,7 +1,6 @@
 """
 工具模块
 """
-
 import algo
 import cv2
 from PIL import Image
@@ -123,7 +122,7 @@ detection_process: DetectionProcessor 目标检测算法
 def detect2(source_file: str, dest_file: str, detection_process: algo.Processor):
     # 源文件为图片
     if source_file.endswith('png') or source_file.endswith('jpg') or source_file.endswith('jpeg'):
-        img = cv2.imread(source_file, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(source_file)
         img = detection_process.process(img)
         cv2.imwrite(dest_file, img)
         return
@@ -161,8 +160,6 @@ def detect2(source_file: str, dest_file: str, detection_process: algo.Processor)
     p = sp.Popen(command, stdin=sp.PIPE)
     i = 0
 
-
-
     # push_frame_thread = multiprocessing.Process(target=, args=())
     # push_frame_thread.daemon = True  # 把子进程设置为daemon方式
     # push_frame_thread.start()  # 运行子进程
@@ -183,9 +180,6 @@ def detect2(source_file: str, dest_file: str, detection_process: algo.Processor)
         p.stdin.write(frame2)
 
 
-
-
-
 """
 person_img: str, 行人图片
 source_file: str,待识别图片或视频
@@ -195,15 +189,15 @@ detection_process: ReIdProcessor 行人重识别算法类对象
 
 
 def re_id(person_img: str, source_file: str, dest_file: str, detection_process: algo.ReIdProcessor):
-    if person_img.endswith('png') is False or person_img.endswith('jpg') is False or person_img.endswith(
+    if person_img.endswith('png') is False and person_img.endswith('jpg') is False and person_img.endswith(
             'jpeg') is False:
         return
 
-    person_frame = cv2.imread(person_img, cv2.IMREAD_GRAYSCALE)
+    person_frame = cv2.imread(person_img)
 
     # 源文件为图片,直接识别
     if source_file.endswith('png') or source_file.endswith('jpg') or source_file.endswith('jpeg'):
-        img = cv2.imread(source_file, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(source_file)
         img = detection_process.recognize(person_frame, img)
         cv2.imwrite(dest_file, img)
         return
@@ -251,3 +245,8 @@ def re_id(person_img: str, source_file: str, dest_file: str, detection_process: 
     finally:
         if source_cap is not None:
             source_cap.release()
+
+
+if __name__ == '__main__':
+    re_id("query/0001_c1s1_001051_00.jpg", "data/samples/c1s1_002301.jpg", "data/samples/1.jpg",
+          search2.ResReIdProcessor())
