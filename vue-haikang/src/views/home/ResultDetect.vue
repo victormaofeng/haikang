@@ -38,7 +38,7 @@
  export default {
      
 
-     data(){
+    data(){
          return{
             detectPage: { page: 1, pageSize: 10, list: [], count: 0 },
             token: "",

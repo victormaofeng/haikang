@@ -25,7 +25,7 @@
             <el-input type="textarea" v-model="form.content"></el-input>
           </el-form-item>
 
-        <el-form-item label="上传">
+        <el-form-item label="上传目标图片">
             <!-- <el-upload
             :on-change="picturePreview"
             :auto-upload="false">
@@ -46,7 +46,7 @@
 
 
 
-          <el-form-item label="上传">
+          <el-form-item label="上传识别内容">
             <el-upload
               ref="upload"
               :auto-upload="is_auto"

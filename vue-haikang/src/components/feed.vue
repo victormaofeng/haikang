@@ -74,6 +74,9 @@ export default {
   },
   created(){
     // this.src=image;
+  this.src="http://127.0.0.1"+this.src
+	this.src1="http://127.0.0.1"+this.src1
+	this.src2="http://127.0.0.1"+this.src2
   },
   methods: {
     close() {

@@ -269,7 +269,6 @@ export default {
       this.messageCount = this.messageCount + 1;
       let obj = JSON.parse(msg.data);
       this.$store.commit("addMessage", obj);
-
       this.$store.commit("addMessageCount");
     },
     send: function (params) {

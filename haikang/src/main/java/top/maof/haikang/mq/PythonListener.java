@@ -1,6 +1,7 @@
 package top.maof.haikang.mq;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,6 @@ public class PythonListener {
 
         message.setStyle(detectionMessage.isDetect());
 
-        WebSocketController.send(detectionMessage.getToken(),JSON.toJSONString(message));
+        WebSocketController.send(detectionMessage.getToken(),JSON.toJSONString(message, SerializerFeature.WriteMapNullValue));
     }
 }
