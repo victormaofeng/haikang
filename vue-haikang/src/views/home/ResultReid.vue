@@ -6,13 +6,15 @@
         </el-breadcrumb>
 
         <div v-if="reidPage.list && reidPage.list.length > 0" class="box">
-          <div v-for="item in reidPage.list" v-bind:key="item.id">
+          <div v-for="item in reidPage.list" :key="item.id">
             <feed
               :title="item.title"
               :desc="item.content"
               :src="item.path"
-              @close="close"
-              @edit="getDetail(item)"
+              :time="item.insertTime"
+              class="pad shadow"
+              @close="close(item.id)"
+              @edit="getDetail(item.id)"
             ></feed>
           </div>
 
@@ -69,6 +71,9 @@ export default {
         },
         getDetail(id){
         this.$router.push({path:'/home/ResultReidIndex',query:{id:id}});
+       },
+       close(id) {
+        window.console.log(id);
        },
     },
     created(){

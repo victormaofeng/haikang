@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="main">
-      <img :src="src" class="img" v-if="src != '' && src != null" />
+      <img :src="fsrc" class="img" v-if="src != '' && src != null" />
         <div class="content">
         <div class="title"><el-button type="text" @click="edit()">{{ title }}</el-button></div>
         <div class="desc">
@@ -74,9 +74,21 @@ export default {
   },
   created(){
     // this.src=image;
-  this.src="http://127.0.0.1"+this.src
-	this.src1="http://127.0.0.1"+this.src1
-	this.src2="http://127.0.0.1"+this.src2
+   //this.src="http://127.0.0.1"+this.src
+
+	
+  },
+
+  computed:{
+    fsrc2: function(){
+      return "http://127.0.0.1"+this.src2;
+    },
+    fsrc1: function(){
+      return "http://127.0.0.1"+this.src1;
+    },
+    fsrc: function(){
+      return "http://127.0.0.1"+this.src;
+    },
   },
   methods: {
     close() {

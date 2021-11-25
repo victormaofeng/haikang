@@ -54,7 +54,7 @@ export default {
                 pageSize: this.detectPage.pageSize,
                 page: this.detectPage.page,
                 type: 1,
-                id:this.$route.query.id,
+                id: this.$route.query.id,
                 },
             })
             .then((res) => {

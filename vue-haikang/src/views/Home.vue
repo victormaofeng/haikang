@@ -256,6 +256,7 @@ export default {
         this.socket.onerror = this.error;
         // 监听socket消息
         this.socket.onmessage = this.getMessage;
+        
       }
     },
     open: function () {
