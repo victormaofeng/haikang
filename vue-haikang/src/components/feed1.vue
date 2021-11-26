@@ -26,12 +26,13 @@
 	  
       <img :src="src1" class="img" v-show="play1" />
       <img :src="src" class="img" v-show="play"  />
-     <img :src="src2" class="img" v-show="play2" /> <h3 v-show="play2">目标人物</h3>
+     <img :src="src2" class="img" v-show="play2" /> 
 	 
       </div>
       <div class="wenzi">
           <h3 class="pword" v-show="play1">原图片</h3>
           <h3 class="pword" v-show="play">生成图片</h3>
+          <h3 v-show="play2">目标人物</h3>
       </div>
         <div class="content">
         <div class="title">{{ title }}</div>
@@ -116,9 +117,9 @@ export default {
   created(){
     this.load();
 	
-	this.src="http://127.0.0.1"+this.src
-	this.src1="http://127.0.0.1"+this.src1
-	this.src2="http://127.0.0.1"+this.src2
+	  this.src="http://127.0.0.1"+this.src
+  	this.src1="http://127.0.0.1"+this.src1
+	  this.src2="http://127.0.0.1"+this.src2
   },
   methods: {
     // close() {

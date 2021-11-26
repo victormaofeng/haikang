@@ -44,9 +44,4 @@ public class DetectDetailVo {
     //完成检测的插入时间
     private Date insertTime1;
 
-
-
-
-
-
 }

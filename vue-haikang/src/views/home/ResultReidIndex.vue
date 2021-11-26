@@ -14,19 +14,20 @@
               :src2="item.path2"
               :desc="item.insertTime"
               :time="item.insertTime1"
+              :type="item.type"
               @close="close"
             ></feed>
           </div>
 
 
-          <el-pagination
+          <!-- <el-pagination
             background
             layout="prev, pager, next"
             :total="reidPage.count"
             :current-page="reidPage.page"
             @current-change="pageChange"
           >
-          </el-pagination>
+          </el-pagination> -->
         </div>
 
     </div>
@@ -34,7 +35,7 @@
 
 
 <script>
-// import feed from "@/components/feed1.vue";
+ import feed from "@/components/feed1.vue";
 
 export default {
     data(){
@@ -49,7 +50,7 @@ export default {
     methods:{
         load(){
             this.$axios
-            .get("detect/listById", {
+            .get("detect/listDetails", {
                 params: {
                 pageSize: this.reidPage.pageSize,
                 page: this.reidPage.page,

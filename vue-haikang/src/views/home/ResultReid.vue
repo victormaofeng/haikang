@@ -10,7 +10,6 @@
             <feed
               :title="item.title"
               :desc="item.content"
-              :src="item.path"
               :time="item.insertTime"
               class="pad shadow"
               @close="close(item.id)"

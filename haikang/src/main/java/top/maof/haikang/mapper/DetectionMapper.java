@@ -56,7 +56,7 @@ public interface DetectionMapper {
     int selectDetailCountByUserAndType(int userId, boolean isDetect,int id);
 
 
-    @Select("select * from v_detect_reslut " +
+    @Select("select id,title,content,user_id,is_detect,path2,eid,type,path1,insertTime,path,insertTime1  from v_detect_reslut " +
             "where user_id = #{userId} and is_detect = #{isDetect} and id = #{id} " +
             "limit #{start},#{len}")
     List<DetectDetailVo> selectDetailByUserAndType(int userId, boolean isDetect, int start, int len, int id);

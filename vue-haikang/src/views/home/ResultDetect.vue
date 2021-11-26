@@ -10,10 +10,11 @@
             <feed
               :title="item.title"
               :desc="item.content"
+              :src="item.path"
               :time="item.insertTime"
               class="pad shadow"
-               @close="close(item.id)"
-               @edit="getDetail(item.id)"
+              @close="close(item.id)"
+              @edit="getDetail(item.id)"
             ></feed>
             <!-- <el-button type="text" icon="el-icon-edit" @click="getDetail(item.id)">
             </el-button> -->
