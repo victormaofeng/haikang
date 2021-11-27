@@ -75,7 +75,7 @@ export default {
   created(){
     // this.src=image;
    //this.src="http://127.0.0.1"+this.src
-
+  
 	
   },
 

@@ -255,8 +255,7 @@ export default {
         // 监听socket错误信息
         this.socket.onerror = this.error;
         // 监听socket消息
-        this.socket.onmessage = this.getMessage;
-        
+        this.socket.onmessage = this.getMessage;  
       }
     },
     open: function () {
@@ -267,7 +266,7 @@ export default {
     },
     getMessage: function (msg) {
       console.log("websocket:", msg.data);
-      this.messageCount = this.messageCount + 1;
+      // this.messageCount = this.messageCount + 1;
       let obj = JSON.parse(msg.data);
       this.$store.commit("addMessage", obj);
       this.$store.commit("addMessageCount");
@@ -282,6 +281,15 @@ export default {
   destroyed() {
     // 销毁监听
     this.socket.onclose = this.close;
+  },
+  //监听messagecount的数值,使this.messagecount的数值与vuex保持一致
+  watch: {
+     '$store.state.messageCount': {
+        handler:function(newVal,oldVal){
+          console.log("监听messagecount的数值"+newVal);
+          this.messageCount = newVal;
+        }
+     }
   },
 };
 </script>

@@ -76,7 +76,7 @@
             } else {
             this.$message.error("数据加载失败");
             }
-        }); 
+        });
        },
 
        close(id) {
