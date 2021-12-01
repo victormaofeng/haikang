@@ -1,0 +1,97 @@
+<template>
+  <div class="login">
+    <el-row>
+      <el-col :span="6" :offset="9">
+        <el-form
+          :model="ruleForm"
+          status-icon
+          ref="ruleForm"
+          :rules="rules"
+          label-width="100px"
+          class="demo-ruleForm"
+        >
+          <el-form-item label="用户名" prop="username" required>
+            <el-input
+              type="text"
+              v-model="ruleForm.username"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="password" required>
+            <el-input
+              type="password"
+              v-model="ruleForm.password"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')"
+              >提交</el-button
+            >
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
+  </div>
+</template>
+<script>
+
+
+export default {
+  name: "login",
+  data() {
+    return {
+      ruleForm: {
+        password: "",
+        username: "",
+      },
+      rules: {
+        username: [
+          { required: true, message: "用户名不能为空", trigger: "blur" },
+        ],
+        password: [
+          { required: true, message: "密码不能为空", trigger: "blur" },
+        ],
+      },
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      let that = this;
+      this.$refs[formName].validate((valid, object) => {
+        if (valid) {
+          window.console.log(that.ruleForm);
+          that.$axios
+            .get("/login/in", {
+              params: {
+                username: that.ruleForm.username,
+                password: that.ruleForm.password,
+              },
+            })
+            .then((res) => {
+              window.console.log(res);
+              res = res.data;
+              if (res.status == 200) {
+                // 纪录token
+               // window.sessionStorage.setItem("token", res.data);
+                that.$store.commit('changeToken',res.data);
+                that.$router.push("/home");
+              } else {
+                that.$message.error("登录失败,用户名或密码有问题");
+              }
+            });
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    },
+  },
+};
+</script>
+<style scoped>
+.login {
+  padding-top: 200px;
+}
+</style>

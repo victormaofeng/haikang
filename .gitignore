@@ -42,6 +42,8 @@ build/
 .DS_Store
 vue-haikang/node_modules
 vue-haikang/dist
+vue-haikang2/node_modules
+vue-haikang2/dist
 
 
 # local env files
