@@ -41,11 +41,14 @@ def concat_path(parent: str, child: str):
 
 
 def get_algo(algo_id):
-    if algo_id == 1:
+    if algo_id == 3:
         return search3.DarknetDetectionProcessor()
 
     elif algo_id == 2:
         return search2.ResReIdProcessor()
+
+    elif algo_id == 1:
+        return search3.SimpleDarknetDetectionProcessor()
 
 
 """

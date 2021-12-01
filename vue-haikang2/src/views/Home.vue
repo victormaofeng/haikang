@@ -3,7 +3,7 @@
     <!-- 左边栏 菜单-->
     <div class="left">
       <!-- 头部栏 -->
-      <div class="header">检测系统</div>
+      <div class="header">重识别系统</div>
       <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
         <el-radio-button :label="false">展开</el-radio-button>
         <el-radio-button :label="true">收起</el-radio-button>
@@ -21,7 +21,7 @@
           <span slot="title">监控</span>
         </el-menu-item>
 
-        <el-submenu index="1">
+        <!-- <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span slot="title">行人检测</span>
@@ -31,7 +31,7 @@
             <el-menu-item index="algorithm1">模型管理</el-menu-item>
             <el-menu-item index="resultDetect">结果管理</el-menu-item>
           </el-menu-item-group>
-        </el-submenu>
+        </el-submenu> -->
 
         <el-submenu index="2">
           <template slot="title">
@@ -44,19 +44,20 @@
             <el-menu-item index="resultReid">结果管理</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
+
       </el-menu>
     </div>
     <!-- 内容栏 -->
     <div class="container">
       <div class="top">
         <el-row type="flex" justify="end">
-          <el-col :span="2">
+          <!-- <el-col :span="2">
             <span class="item" @click="goDetect()">检测</span>
           </el-col>
 
           <el-col :span="2">
             <span class="item" @click="goDetect()">历史</span>
-          </el-col>
+          </el-col> -->
 
           <el-col :span="2">
             <el-badge :value="messageCount" v-if="messageCount > 0">
@@ -158,10 +159,6 @@ export default {
         res = res.data;
         if (res.status == 200) {
           this.user = res.data;
-          console.log("============================================");
-          console.log(res.data);
-          console.log("============================================");
-          //window.sessionStorage.setItem("user", JSON.stringify(res.data));
           this.$store.commit("setUser", res.data);
         } else {
           this.$message.error("个人信息加载失败");
@@ -302,7 +299,7 @@ export default {
 }
 
 .header {
-  background-color: #b3c0d1;
+  background-color: #409EFF;
   color: #333;
   text-align: center;
   line-height: 45px;
@@ -312,7 +309,7 @@ export default {
 }
 
 .left {
-  background-color: #d3dce6;
+  background-color: #F2F6FC;
   color: #333;
   width: 200px;
   overflow-y: auto;
