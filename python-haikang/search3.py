@@ -109,8 +109,6 @@ def process(dest_frame):
         return result
 
 
-
-
 class SimpleDarknetDetectionProcessor(DetectionProcessor):
 
     def __init__(self, cfg='cfg/yolov3.cfg',
@@ -208,7 +206,6 @@ class SimpleDarknetDetectionProcessor(DetectionProcessor):
                     plot_one_box(box, img0, label='p', color=self.colors[int(cls)])
 
             return img0
-
 
 
 class DarknetDetectionProcessor(DetectionProcessor):

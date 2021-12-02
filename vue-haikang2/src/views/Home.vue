@@ -4,10 +4,10 @@
     <div class="left">
       <!-- 头部栏 -->
       <div class="header">重识别系统</div>
-      <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
+      <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
         <el-radio-button :label="false">展开</el-radio-button>
         <el-radio-button :label="true">收起</el-radio-button>
-      </el-radio-group>
+      </el-radio-group> -->
       <el-menu
         default-active="index"
         class="el-menu-vertical-demo"
@@ -44,7 +44,6 @@
             <el-menu-item index="resultReid">结果管理</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
-
       </el-menu>
     </div>
     <!-- 内容栏 -->
@@ -119,15 +118,20 @@
           </el-col>
         </el-row>
       </div>
+
       <!-- 主栏 -->
       <div class="main">
-        <router-view />
+        <norecord></norecord>
+
+        <!-- <router-view /> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import norecord from "@/components/no-record.vue";
+
 export default {
   name: "Home",
   data() {
@@ -147,6 +151,10 @@ export default {
       },
     };
   },
+  components: {
+    norecord
+  },
+
   created() {
     // 请求个人信息
     this.$axios
@@ -299,7 +307,7 @@ export default {
 }
 
 .header {
-  background-color: #409EFF;
+  background-color: #409eff;
   color: #333;
   text-align: center;
   line-height: 45px;
@@ -309,7 +317,7 @@ export default {
 }
 
 .left {
-  background-color: #F2F6FC;
+  background-color: #f2fcf2;
   color: #333;
   width: 200px;
   overflow-y: auto;

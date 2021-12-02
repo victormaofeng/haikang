@@ -17,9 +17,7 @@ from reid.config import cfg as reidCfg
 import algo
 
 
-def detect(cfg,
-           data,
-           weights,
+def detect(cfg,data,weights,
            source_frame_list,  # 目标人物帧
            dest_frame,  # 原始图片帧
            img_size=416,
