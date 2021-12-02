@@ -4,7 +4,7 @@
         <el-breadcrumb-item>首页</el-breadcrumb-item>
         <el-breadcrumb-item>模型结果</el-breadcrumb-item>
         </el-breadcrumb>
-  <div class="box">
+  <div class="box" v-if="tableData4.length!==0">
   <el-table
     :data="tableData4"
     
@@ -42,17 +42,21 @@
     </el-table-column>
   </el-table>
   </div>
+  <div class="box" v-else>
+   <noRecord></noRecord>
+  </div>
   </div>
 </template>
 
 <script>
-
+  import noRecord from "@/components/no-record.vue";
   export default {
-   
-
     created() {
         this.token = this.$store.state.token;
         this.load();
+    },
+    components: {
+    noRecord,
     },
 
     methods: {
@@ -80,7 +84,6 @@
       },
       
     },
-    
     data() {
       return {
         // tableData4: [{

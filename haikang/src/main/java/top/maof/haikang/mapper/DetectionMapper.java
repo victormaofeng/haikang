@@ -34,8 +34,8 @@ public interface DetectionMapper {
 
 
     @Select("select id,title,content,insert_time,update_time,path,type,is_detect from t_detection " +
-            "where user_id = #{userId} and is_detect = #{isDetect} " +
-            "limit #{start},#{len}")
+            "where user_id = #{userId} and is_detect = #{isDetect} ORDER BY id DESC " +
+            "limit #{start},#{len} ")
     List<Detection> selectsByUserAndType(int userId,boolean isDetect, int start, int len);
 
 

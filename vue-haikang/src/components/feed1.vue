@@ -153,7 +153,7 @@ export default {
       // 如果不是重识别，则不显示目标图像
       if(this.src2 == '' || this.src2 == null){
                 this.play2 = ! this.play2
-        }        
+      }        
     }
 
   },
