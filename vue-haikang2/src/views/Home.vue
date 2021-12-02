@@ -3,14 +3,18 @@
     <!-- 左边栏 菜单-->
     <div class="left">
       <!-- 头部栏 -->
-      <div class="header">重识别系统</div>
+      <div class="header">
+        <img :src="logo" class="img" />
+        <div class="name">行人重识别系统</div>
+      </div>
+
       <!-- <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
         <el-radio-button :label="false">展开</el-radio-button>
         <el-radio-button :label="true">收起</el-radio-button>
       </el-radio-group> -->
+
       <el-menu
         default-active="index"
-        class="el-menu-vertical-demo"
         @open="handleOpen"
         @close="handleClose"
         :collapse="isCollapse"
@@ -21,31 +25,21 @@
           <span slot="title">监控</span>
         </el-menu-item>
 
-        <!-- <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-menu"></i>
-            <span slot="title">行人检测</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="upload1">检测管理</el-menu-item>
-            <el-menu-item index="algorithm1">模型管理</el-menu-item>
-            <el-menu-item index="resultDetect">结果管理</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu> -->
-
-        <el-submenu index="2">
-          <template slot="title">
-            <i class="el-icon-menu"></i>
-            <span slot="title">行人重识别</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="upload2">重识别管理</el-menu-item>
-            <el-menu-item index="algorithm2">模型管理</el-menu-item>
-            <el-menu-item index="resultReid">结果管理</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
+        <el-menu-item index="upload2">
+          <i class="el-icon-menu"></i>
+          <span slot="title">重识别管理</span></el-menu-item
+        >
+        <el-menu-item index="algorithm2">
+          <i class="el-icon-menu"></i>
+          <span slot="title">模型管理</span></el-menu-item
+        >
+        <el-menu-item index="resultReid">
+          <i class="el-icon-menu"></i>
+          <span slot="title">结果管理</span></el-menu-item
+        >
       </el-menu>
     </div>
+
     <!-- 内容栏 -->
     <div class="container">
       <div class="top">
@@ -121,21 +115,22 @@
 
       <!-- 主栏 -->
       <div class="main">
-        <norecord></norecord>
-
-        <!-- <router-view /> -->
+        <router-view />
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import norecord from "@/components/no-record.vue";
+import nepu from "@/assets/nepu.png";
 
 export default {
   name: "Home",
   data() {
     return {
+      logo: nepu,
       isCollapse: false,
       user: {},
       token: "",
@@ -152,7 +147,7 @@ export default {
     };
   },
   components: {
-    norecord
+    norecord,
   },
 
   created() {
@@ -260,7 +255,7 @@ export default {
         // 监听socket错误信息
         this.socket.onerror = this.error;
         // 监听socket消息
-        this.socket.onmessage = this.getMessage;  
+        this.socket.onmessage = this.getMessage;
       }
     },
     open: function () {
@@ -289,12 +284,12 @@ export default {
   },
   //监听messagecount的数值,使this.messagecount的数值与vuex保持一致
   watch: {
-     '$store.state.messageCount': {
-        handler:function(newVal,oldVal){
-          console.log("监听messagecount的数值"+newVal);
-          this.messageCount = newVal;
-        }
-     }
+    "$store.state.messageCount": {
+      handler: function (newVal, oldVal) {
+        console.log("监听messagecount的数值" + newVal);
+        this.messageCount = newVal;
+      },
+    },
   },
 };
 </script>
@@ -306,16 +301,6 @@ export default {
   flex-direction: row;
 }
 
-.header {
-  background-color: #409eff;
-  color: #333;
-  text-align: center;
-  line-height: 45px;
-  font-size: 20px;
-  height: 45px;
-  margin-bottom: 40px;
-}
-
 .left {
   background-color: #f2fcf2;
   color: #333;
@@ -325,12 +310,34 @@ export default {
   text-align: center;
 }
 
+
 .container {
   flex: 1;
   display: flex;
   flex-direction: column;
   background-color: #e9eef3;
 }
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+
+
+.img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50px 50px;
+}
+
+.name {
+  color: #333;
+}
+
 
 .top {
   background-color: #e9eef3;

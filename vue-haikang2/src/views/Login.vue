@@ -2,6 +2,7 @@
   <div class="login">
     <el-row>
       <el-col :span="6" :offset="9">
+        
         <el-form
           :model="ruleForm"
           status-icon
