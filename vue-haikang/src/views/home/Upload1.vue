@@ -52,7 +52,7 @@
           </el-form-item>
 
           <el-form-item>
-            <el-button type="primary" @click="detect" native-type="button"
+            <el-button type="primary" size="small" @click="detect" native-type="button"
               >开始检测</el-button
             >
           </el-form-item>
@@ -98,7 +98,7 @@ export default {
       window.console.log(res);
       if (res.status == 200) {
         this.$message({
-          message: "成功",
+          message: "上传成功！文件检测中，稍候。。。",
           type: "success",
         });
       } else {

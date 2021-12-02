@@ -35,7 +35,7 @@
           <h3 v-show="play2">目标人物</h3>
       </div>
         <div class="content">
-        <div class="title">{{ title }}</div>
+        <!-- <div class="title">{{ title }}</div> -->
         <div class="desc">
           <div>上传时间:{{ desc }}</div>
           <div>生成时间:{{ time }}</div>

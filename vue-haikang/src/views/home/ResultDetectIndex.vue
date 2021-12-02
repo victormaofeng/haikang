@@ -7,6 +7,7 @@
 
         <div v-if="detectPage.list && detectPage.list.length > 0" class="box">
           <div v-for="item in detectPage.list" v-bind:key="item.id">
+            <div><h1>{{item.title}}</h1></div>
             <feed
               :title="item.title"
               :src1="item.path1"

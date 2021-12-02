@@ -3,7 +3,7 @@
     <!-- 左边栏 菜单-->
     <div class="left">
       <!-- 头部栏 -->
-      <div class="header">检测系统</div>
+      <div class="header">智能视频监控系统</div>
       <el-radio-group v-model="isCollapse" style="margin-bottom: 20px">
         <el-radio-button :label="false">展开</el-radio-button>
         <el-radio-button :label="true">收起</el-radio-button>
@@ -33,7 +33,7 @@
           </el-menu-item-group>
         </el-submenu>
 
-        <el-submenu index="2">
+        <!-- <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span slot="title">行人重识别</span>
@@ -43,20 +43,20 @@
             <el-menu-item index="algorithm2">模型管理</el-menu-item>
             <el-menu-item index="resultReid">结果管理</el-menu-item>
           </el-menu-item-group>
-        </el-submenu>
+        </el-submenu> -->
       </el-menu>
     </div>
     <!-- 内容栏 -->
     <div class="container">
       <div class="top">
         <el-row type="flex" justify="end">
-          <el-col :span="2">
+          <!-- <el-col :span="2">
             <span class="item" @click="goDetect()">检测</span>
           </el-col>
 
           <el-col :span="2">
             <span class="item" @click="goDetect()">历史</span>
-          </el-col>
+          </el-col> -->
 
           <el-col :span="2">
             <el-badge :value="messageCount" v-if="messageCount > 0">
@@ -267,6 +267,10 @@ export default {
     getMessage: function (msg) {
       console.log("websocket:", msg.data);
       // this.messageCount = this.messageCount + 1;
+      this.$message({
+          message: "检测完毕，请查看消息！",
+          type: "success",
+        });
       let obj = JSON.parse(msg.data);
       this.$store.commit("addMessage", obj);
       this.$store.commit("addMessageCount");
