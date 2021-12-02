@@ -26,7 +26,7 @@
 	  
       <img :src="src1" class="img" v-show="play1" />
       <img :src="src" class="img" v-show="play"  />
-     <img :src="src2" class="img" v-show="play2" /> 
+      <img :src="src2" class="img" v-show="play2" /> 
 	 
       </div>
       <div class="wenzi">
@@ -153,7 +153,7 @@ export default {
       // 如果不是重识别，则不显示目标图像
       if(this.src2 == '' || this.src2 == null){
                 this.play2 = ! this.play2
-        }        
+      }        
     }
 
   },
@@ -173,7 +173,7 @@ export default {
 .main1 {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .wenzi{
   display: flex;
@@ -209,7 +209,7 @@ export default {
   color: #909399;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   text-overflow: ellipsis;
 }
 

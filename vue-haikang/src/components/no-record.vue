@@ -16,7 +16,7 @@ export default {
   mounted() {},
 };
 </script>
-<style scope>
+<style scoped>
 .main {
   display: flex;
   flex-direction: column;
