@@ -43,21 +43,43 @@
     <el-row>
       <el-col :span="8" class="flexbox1" >
         <el-card :body-style="{ padding: '0px' }" v-show="play1">
-          <img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" class="image">
+          <img :src="src1" class="image">
           <div style="padding: 14px;">
             <span>原图片</span>
             <div class="bottom clearfix">
-              <time class="time">{{ insterTime1 }}</time>
+              <!-- <time class="time">{{ insterTime1 }}</time> -->
               <!-- <el-button type="text" class="button">操作按钮</el-button> -->
             </div>
           </div>
         </el-card>
         <el-card :body-style="{ padding: '0px' }" v-show="play">
-          <img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" class="image">
+          <img :src="src" class="image">
           <div style="padding: 14px;">
             <span>生成图片</span>
             <div class="bottom clearfix">
-              <time class="time">{{ insterTime }}</time>
+              <!-- <time class="time">{{ insterTime }}</time> -->
+              <!-- <el-button type="text" class="button">操作按钮</el-button> -->
+            </div>
+          </div>
+        </el-card>
+      </el-col>
+      <el-col :span="8" class="flexbox1" >
+        <el-card :body-style="{ padding: '0px' }" v-show="play3">
+          <img :src="src1" class="image">
+          <div style="padding: 14px;">
+            <span>原视频</span>
+            <div class="bottom clearfix">
+              <!-- <time class="time">{{ insterTime1 }}</time> -->
+              <!-- <el-button type="text" class="button">操作按钮</el-button> -->
+            </div>
+          </div>
+        </el-card>
+        <el-card :body-style="{ padding: '0px' }" v-show="play4">
+          <img :src="src" class="image">
+          <div style="padding: 14px;">
+            <span>生成视频</span>
+            <div class="bottom clearfix">
+              <!-- <time class="time">{{ insterTime }}</time> -->
               <!-- <el-button type="text" class="button">操作按钮</el-button> -->
             </div>
           </div>
@@ -67,11 +89,11 @@
     <el-row>
       <el-col :span="8"  class="flexbox2">
         <el-card :body-style="{ padding: '0px' }" v-show="play2">
-          <img src="https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png" class="image">
+          <img :src="src2" class="image1">
           <div style="padding: 14px;">
             <span>目标人物</span>
             <div class="bottom clearfix">
-              <time class="time">{{ insterTime1 }}</time>
+              <!-- <time class="time">{{ insterTime1 }}</time> -->
               <!-- <el-button type="text" class="button">操作按钮</el-button> -->
             </div>
           </div>
@@ -116,14 +138,23 @@
             return{
                 title: this.$route.query.message.title,
                 content: this.$route.query.message.content,
-                src: this.$route.query.message.path,
-                src1: this.$route.query.message.path1,
-                src2: this.$route.query.message.path2,
+                //生成文件
+                src: "http://127.0.0.1"+this.$route.query.message.path,
+                //源文件
+                src1: "http://127.0.0.1"+this.$route.query.message.path1,
+                //目标人物
+                src2: "http://127.0.0.1"+this.$route.query.message.path2,
+                //完成检测插入的时间
                 insterTime: this.$route.query.message.insertTime,
+                //上传的时间
                 insterTime1: this.$route.query.message.insertTime1,
+                //文件类型
+                type: this.$route.query.message.type,
                 play: true,
                 play1: true,
                 play2: true,
+                play3: true,
+                play4: true,
             };
         },
         created(){
@@ -132,15 +163,39 @@
         },
         methods:{
             load(){
-                if(this.src == '' || this.src == null){
+                // if(this.src == '' || this.src == null){
+                //         this.play = ! this.play
+                // } 
+                // if(this.src1 == '' || this.src1 == null){
+                //         this.play1 = ! this.play1
+                // }
+                // if(this.src2 == '' || this.src2 == null){
+                //         this.play2 = ! this.play2
+                // }
+                //如果格式为图片，则采取img显示；如果格式不是图片，则采取dplayer显示。
+              if(this.type == 'jpg' || this.type == 'png' || this.type== 'jpeg'){
+                this.play4 = ! this.play4
+                this.play3 = ! this.play3
+                if(this.src == '' || this.src == null ){
                         this.play = ! this.play
                 } 
-                if(this.src1 == '' || this.src1 == null){
+                if(this.src1 == '' || this.src1 == null){  
                         this.play1 = ! this.play1
                 }
-                if(this.src2 == '' || this.src2 == null){
-                        this.play2 = ! this.play2
+              }else{
+                this.play1 = ! this.play1
+                this.play = ! this.play
+                if(this.src == '' || this.src == null ){
+                        this.play4 = ! this.play4
+                } 
+                if(this.src1 == '' || this.src1 == null){  
+                        this.play3 = ! this.play3
                 }
+              }
+              // 如果不是重识别，则不显示目标图像
+              if(this.src2 == '' || this.src2 == null){
+                        this.play2 = ! this.play2
+              } 
                 
             }
         }
@@ -239,6 +294,11 @@
   }
 
   .image {
+    width: 480px;
+    height: 320px;
+    display: block;
+  }
+  .image1{
     width: 100%;
     display: block;
   }
