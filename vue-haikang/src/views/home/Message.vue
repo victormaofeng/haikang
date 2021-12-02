@@ -101,12 +101,16 @@ export default {
       for (var i = 0; i < messages.length; i++) {
         if (messages[i].style) {
           //因为json将Date的时间之间转化为int了，所以要再转回来
-          let date = new Date( messages[i].insertTime1);
-          messages[i].insertTime1 = date;
+          let date = new Date(messages[i].insertTime);
+          let date1 = new Date( messages[i].insertTime1);
+          messages[i].insertTime = date;
+          messages[i].insertTime1 = date1;
           this.detectPage.list.unshift(messages[i]);
         } else {
-          let date = new Date( messages[i].insertTime1);
-          messages[i].insertTime1 = date;
+          let date = new Date(messages[i].insertTime);
+          let date1 = new Date( messages[i].insertTime1);
+          messages[i].insertTime = date;
+          messages[i].insertTime1 = date1;
           this.reidPage.list.unshift(messages[i]);
         }
       }

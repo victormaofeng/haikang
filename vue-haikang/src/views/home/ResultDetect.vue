@@ -37,7 +37,6 @@
 <script>
  import feed from "@/components/feed.vue";
  export default {
-     
 
     data(){
          return{
@@ -53,7 +52,6 @@
         this.load();
     },
     methods:{
-
         pageChange(currentPage) {
             this.detectPage.page = currentPage;
             this.load();

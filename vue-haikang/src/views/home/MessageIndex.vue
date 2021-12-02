@@ -116,9 +116,9 @@
             return{
                 title: this.$route.query.message.title,
                 content: this.$route.query.message.content,
-                src: this.$route.query.message.path,
-                src1: this.$route.query.message.path1,
-                src2: this.$route.query.message.path2,
+                src: "http://127.0.0.1"+this.$route.query.message.path,
+                src1: "http://127.0.0.1"+this.$route.query.message.path1,
+                src2: "http://127.0.0.1"+this.$route.query.message.path2,
                 insterTime: this.$route.query.message.insertTime,
                 insterTime1: this.$route.query.message.insertTime1,
                 play: true,
