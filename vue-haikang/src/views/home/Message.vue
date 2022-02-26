@@ -2,7 +2,7 @@
   <div class="main">
     <el-breadcrumb separator-class="el-icon-arrow-right" class="size box bg">
       <el-breadcrumb-item>首页</el-breadcrumb-item>
-      <el-breadcrumb-item>我的消息</el-breadcrumb-item>
+      <el-breadcrumb-item>消息管理</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-tabs v-model="activeName" @tab-click="tabChange" class="box">
@@ -32,7 +32,7 @@
         </div>
       </el-tab-pane>
 
-      <el-tab-pane name="reid">
+      <!-- <el-tab-pane name="reid">
         <span slot="label" class="size">行人重识别</span>
         <div v-if="reidPage.list && reidPage.list.length > 0">
           <div v-for="item in reidPage.list" v-bind:key="item.id">
@@ -47,13 +47,13 @@
             </feed>
           </div>
 
-          <!-- <el-pagination
+          <el-pagination
             background
             layout="prev, pager, next"
           >
-          </el-pagination> -->
+          </el-pagination>
         </div>
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

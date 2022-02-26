@@ -6,6 +6,11 @@
     </el-breadcrumb>
 
     <div class="list">
+      <!-- 这个标题也可以加入组件化开发，此刻暂时先不做；应为实验室摄像头没开，整体布局没法测试 -->
+      <div>
+        <div class="title">
+        <h2>摄像头一</h2>
+        </div>
       <d-player
         src="http://60.30.52.41:80/live/zxldd.stream/playlist.m3u8"
         :live="true"
@@ -13,21 +18,25 @@
         type="hls"
         class="item"
       />
+      </div>
 
-
+      <div>
       <d-player v-if="src!=''"
         :src="src"
         type="hls"
         :live="true"
         class="item"
       />
+      </div>
 
+      <div>
       <d-player
         :src="src" v-if="src!=''"
         type="hls"
         :live="true"
         class="item"
       />
+      </div>
     </div>
   </div>
 </template>
@@ -101,11 +110,13 @@ export default {
 }
 
 .item {
-  width: 400px;
-  height: 300px;
+  width: 750px;
+  height: 500px;
   margin: 10px 10px;
 }
-
+.title{
+  padding-left: 300px;
+}
 .size {
   font-size: 15px;
 }

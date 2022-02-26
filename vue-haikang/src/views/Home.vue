@@ -15,13 +15,32 @@
         @close="handleClose"
         :collapse="isCollapse"
         :router="true"
+        mode="horizontal"
+        text-color="#000000"
+        active-text-color="#ffd04b"
+        text-size="123cm"
       >
         <el-menu-item index="index">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-video-camera-solid"></i>
           <span slot="title">监控</span>
         </el-menu-item>
 
-        <el-submenu index="1">
+        <el-menu-item index="upload1">
+          <i class="el-icon-menu"></i>
+          <span slot="title">检测管理</span>
+        </el-menu-item>
+
+        <el-menu-item index="algorithm1">
+          <i class="el-icon-menu"></i>
+          <span slot="title">模型管理</span>
+        </el-menu-item>
+
+        <el-menu-item index="resultDetect">
+          <i class="el-icon-menu"></i>
+          <span slot="title">结果管理</span>
+        </el-menu-item>
+
+        <!-- <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-menu"></i>
             <span slot="title">行人检测</span>
@@ -31,7 +50,7 @@
             <el-menu-item index="algorithm1">模型管理</el-menu-item>
             <el-menu-item index="resultDetect">结果管理</el-menu-item>
           </el-menu-item-group>
-        </el-submenu>
+        </el-submenu> -->
 
         <!-- <el-submenu index="2">
           <template slot="title">
@@ -120,6 +139,7 @@
       </div>
       <!-- 主栏 -->
       <div class="main">
+        
         <router-view />
       </div>
     </div>
@@ -144,6 +164,7 @@ export default {
         newPwd: "",
         checkPwd: "",
       },
+      imgSrc: require('../assets/keji.jpg'),
     };
   },
   created() {
@@ -342,7 +363,9 @@ export default {
 .main {
   flex: 1;
   overflow-y: auto;
-  background-color: white;
+  /* background-color: white; */
+  background:url("../assets/keji3.jpg");
+  background-size:100% 100%;
 }
 
 .footer {
@@ -370,4 +393,5 @@ export default {
   color: #409eff;
   font-size: 18px;
 }
+
 </style>

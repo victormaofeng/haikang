@@ -1,6 +1,15 @@
 <template>
+<div>
+  <div class="background">
+    <!-- vue.引用文件图片 要使用 require -->
+    <img :src="imgSrc" width="100%" height="100%" alt="" />
+  </div>
+  <div class="title">
+    <h2>智能视频监控系统</h2>
+  </div>
   <div class="login">
     <el-row>
+      <!-- span 宽度 ； offset 左侧空多少份 -->
       <el-col :span="6" :offset="9">
         <el-form
           :model="ruleForm"
@@ -20,13 +29,14 @@
           <el-form-item label="密码" prop="password" required>
             <el-input
               type="password"
+              @keyup.enter.native="submitForm('ruleForm')"
               v-model="ruleForm.password"
               autocomplete="off"
             ></el-input>
           </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="submitForm('ruleForm')"
-              >提交</el-button
+              >登录</el-button
             >
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
@@ -34,6 +44,7 @@
       </el-col>
     </el-row>
   </div>
+</div>
 </template>
 <script>
 
@@ -54,6 +65,7 @@ export default {
           { required: true, message: "密码不能为空", trigger: "blur" },
         ],
       },
+      imgSrc: require('../assets/keji.jpg'),
     };
   },
   methods: {
@@ -93,5 +105,18 @@ export default {
 <style scoped>
 .login {
   padding-top: 200px;
+}
+.background{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.title{
+  position: absolute;
+  padding-left: 45%;
+  padding-top: 10%;
 }
 </style>

@@ -17,15 +17,15 @@
           size="medium"
           action=""
         >
-          <el-form-item label="标题">
+          <el-form-item label="任务标题" class="blackitem">
             <el-input v-model="form.title"></el-input>
           </el-form-item>
 
-          <el-form-item label="介绍">
+          <el-form-item label="任务介绍" class="blackitem">
             <el-input type="textarea" v-model="form.content"></el-input>
           </el-form-item>
 
-          <el-form-item label="上传">
+          <el-form-item label="文件上传" class="blackitem">
             <el-upload
               ref="upload"
               :auto-upload="is_auto"
@@ -43,7 +43,7 @@
 
 
 
-           <el-form-item label="选择模型">
+           <el-form-item label="选择模型" class="blackitem">
             <el-select v-model="form.algorithmId" placeholder="请选择模型">
             <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
@@ -158,5 +158,8 @@ export default {
 
 .bg {
   background-color: #e9eef3;
+}
+.blackitem .el-form-item__label{
+  color: 	#00FFFF;
 }
 </style>
